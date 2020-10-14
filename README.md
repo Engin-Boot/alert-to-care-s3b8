@@ -33,7 +33,7 @@ Acceptance criteria: The configuration needs to include:
 
 ### Occupancy Interface
 
-An occupancy-management-client needs to set the status of each bed
+An occupancy-management-client needs to set the bedStatus of each bed
 
 - Occupancy of each bed
 - Enter Patient details

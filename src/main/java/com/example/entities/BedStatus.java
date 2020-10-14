@@ -1,5 +1,5 @@
 package com.example.entities;
 
-public enum Status {
+public enum BedStatus {
     VACANT, OCCUPIED, MAINTENANCE
 }

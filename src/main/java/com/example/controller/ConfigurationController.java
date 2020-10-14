@@ -22,18 +22,12 @@ public class ConfigurationController {
     @Autowired
     private BedService bedService;
 
-//    @GetMapping("/patient/{id}")
-//    public ResponseEntity<Patient> getPatient(@PathVariable(value = "id") int id) throws PatientNotFoundException {
-//        Patient savedPatient = patientService.getPatientById(id);
-//        return new ResponseEntity<Patient>(savedPatient, HttpStatus.OK);
-//    }
-
-
     @PostMapping("/client/config")
     public ResponseEntity<Client> createClient(@RequestBody Client client) throws ClientAlreadyExistsException {
         Client savedClient = clientService.saveClient(client);
         System.out.println("saving client");
         bedService.createBeds(client.getNo_of_beds(), client.getClient_id());
+        System.out.println("saving beds");
         return new ResponseEntity<Client>(savedClient, HttpStatus.CREATED);
     }
 
@@ -43,14 +37,7 @@ public class ConfigurationController {
         Client savedClient = clientService.updateClient(client, client_id.toString());
         System.out.println("Updating client");
         bedService.createBeds(no_of_beds_to_add, client_id.toString());
-        return new ResponseEntity<Client>(savedClient, HttpStatus.CREATED);
+        System.out.println("saving beds");
+        return new ResponseEntity<Client>(savedClient, HttpStatus.OK);
     }
-
-    @PostMapping(path="/saveBed")
-    public String addNewPatient(@RequestBody Bed bed){
-        bedService.save(bed);
-        return "Patient Data Saved";
-    }
-
-
 }

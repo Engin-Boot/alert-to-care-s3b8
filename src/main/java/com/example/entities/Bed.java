@@ -8,33 +8,33 @@ public class Bed {
     @Id
     private String bed_id;
 
-    private String client_id;
+    private String clientId;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private BedStatus bedStatus;
 
     public Bed(){}
 
-    public Bed(String bed_id, String client_id, Status status) {
+    public Bed(String bed_id, String clientId, BedStatus bedStatus) {
         this.bed_id = bed_id;
-        this.client_id = client_id;
-        this.status = status;
+        this.clientId = clientId;
+        this.bedStatus = bedStatus;
     }
 
-    public String getClient_id() {
-        return client_id;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setClient_id(String client_id) {
-        this.client_id = client_id;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public Status getStatus() {
-        return status;
+    public BedStatus getBedStatus() {
+        return bedStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setBedStatus(BedStatus bedStatus) {
+        this.bedStatus = bedStatus;
     }
 
     public String getBed_id() {
