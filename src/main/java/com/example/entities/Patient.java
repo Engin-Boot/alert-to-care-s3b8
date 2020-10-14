@@ -10,6 +10,7 @@ public class Patient {
 	private String name;
 	private String aadhar;
 	private String dob;
+	private String patient_status;
 	
 	public String getPatient_id() {
 		return patient_id;
@@ -34,6 +35,13 @@ public class Patient {
 	}
 	public void setDob(String dob) {
 		this.dob = dob;
+	}
+	public String getPatient_status() {
+		return patient_status;
+	}
+	public void setPatient_status(String patient_status) {
+		this.patient_status = patient_status;
 	}	
+	
 	
 }
