@@ -6,6 +6,8 @@ import com.example.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ClientService {
 
@@ -27,7 +29,8 @@ public class ClientService {
         }
     }
 
-    public Client saveClient(Client client, String client_id) throws ClientAlreadyExistsException {
+    public Client saveClient(Client client) throws ClientAlreadyExistsException {
+        String client_id = UUID.randomUUID().toString();
         client.setClient_id(client_id);
         if(clientRepository.findById(client_id).isPresent()) {
             throw new ClientAlreadyExistsException("Client with id = "+client_id + " already exists");

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 
 @RestControllerAdvice
-public class PatientRestAdvice {
+public class ConfigurationRestAdvice {
 
     @ExceptionHandler(ClientAlreadyExistsException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
