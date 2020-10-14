@@ -1,7 +1,10 @@
 package com.example.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Client {
@@ -9,8 +12,8 @@ public class Client {
 	private String client_id;
 	private String client_type;
 	private String layout;
-	private String no_of_beds;
-	
+	private int no_of_beds;
+
 	public String getClient_id() {
 		return client_id;
 	}
@@ -29,10 +32,10 @@ public class Client {
 	public void setLayout(String layout) {
 		this.layout = layout;
 	}
-	public String getNo_of_beds() {
+	public int getNo_of_beds() {
 		return no_of_beds;
 	}
-	public void setNo_of_beds(String no_of_beds) {
+	public void setNo_of_beds(int no_of_beds) {
 		this.no_of_beds = no_of_beds;
 	}
 	
