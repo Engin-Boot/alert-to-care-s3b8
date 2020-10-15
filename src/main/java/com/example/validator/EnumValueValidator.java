@@ -14,7 +14,34 @@ public class EnumValueValidator implements ConstraintValidator<Enum, String>
     {
         this.annotation = annotation;
     }
- 
+    
+    
+    public boolean validate(Object enumValue, Object[] enumValues, String valueForValidation, boolean result) {
+    	if(valueForValidation.equals(enumValue.toString())||refactorcheckValid(valueForValidation,enumValue,result)) {
+    		result = true;
+    	}
+		return result;
+    }
+    
+    public boolean refactorcheckValid(String valueForValidation, Object enumValue, boolean result) {
+    	if(this.annotation.ignoreCase() && valueForValidation.equalsIgnoreCase(enumValue.toString())){
+    		result = true;
+    	}
+		return result;
+    }
+    
+    public boolean checkValid(Object[] enumValues, String valueForValidation, boolean result) {
+    	for(Object enumValue:enumValues)
+        {
+            if(validate(enumValue,enumValues, valueForValidation, result))
+            {
+                result = true; 
+                break;
+            }
+        }
+		return result;
+    }
+    
     @Override
     public boolean isValid(String valueForValidation, ConstraintValidatorContext constraintValidatorContext)
     {
@@ -24,17 +51,8 @@ public class EnumValueValidator implements ConstraintValidator<Enum, String>
          
         if(enumValues != null)
         {
-            for(Object enumValue:enumValues)
-            {
-                if(valueForValidation.equals(enumValue.toString()) 
-                   || (this.annotation.ignoreCase() && valueForValidation.equalsIgnoreCase(enumValue.toString())))
-                {
-                    result = true; 
-                    break;
-                }
-            }
+            result = checkValid(enumValues, valueForValidation, result);
         }
-         
         return result;
     }
 }
