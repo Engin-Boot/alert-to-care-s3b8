@@ -1,6 +1,5 @@
 package com.example.controller;
 
-import com.example.entities.Bed;
 import com.example.entities.Client;
 import com.example.exceptions.ClientAlreadyExistsException;
 import com.example.service.BedService;

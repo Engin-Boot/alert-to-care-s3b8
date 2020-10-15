@@ -1,8 +1,10 @@
 package com.example.entities;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import com.example.customannotations.Enum;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -13,7 +15,7 @@ public class Bed {
     @NotNull(message = "Client_Id should not be null")
     private String clientId;
     @NotNull(message = "BED Status should not be null")
-    @Enum(enumClass = BedStatus.class, ignoreCase = true, message = "Please enter correct value {VACANT, OCCUPIED, MAINTENANCE}")
+    @Enum(enumClass = BedStatus.class, ignoreCase = true, message = "Please enter correct value for BedStatus {VACANT, OCCUPIED, MAINTENANCE}")
     private String bedStatus;
 
     public Bed(){}

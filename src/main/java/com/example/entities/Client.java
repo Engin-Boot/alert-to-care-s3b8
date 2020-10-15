@@ -1,12 +1,12 @@
 package com.example.entities;
 
+import com.example.customannotations.Enum;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.example.customannotations.Enum;
 
 @Entity
 public class Client {
@@ -16,11 +16,13 @@ public class Client {
 	@Size(min=2, message="Client_Type should have atleast 2 characters")
 	private String client_type;
 	@NotNull(message = "Layout should not be null")
-	@Enum(enumClass = BedLayout.class, ignoreCase = true, message = "Please enter correct value {Default, L_Layout, Parallel")
+	@Enum(enumClass = BedLayout.class, ignoreCase = true, message = "Please enter correct value for Layout {Default, L_Layout, Parallel")
 	private String layout;
 	@NotNull
 	@Min(value = 1, message = "Min no of beds should be greater or equal to 1")
 	private int no_of_beds;
+
+	public Client(){}
 
 	public Client(String client_id, @NotNull(message = "Client_Type should not be null") @Size(min = 2, message = "Client_Type should have atleast 2 characters") String client_type, @NotNull(message = "Layout should not be null") String layout, @NotNull @Min(value = 1, message = "Min no of beds should be greater or equal to 1") int no_of_beds) {
 		this.client_id = client_id;

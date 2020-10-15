@@ -1,15 +1,11 @@
 package com.example.entities;
 
 import com.example.customannotations.Enum;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
 @Entity
 public class Patient {
@@ -24,8 +20,16 @@ public class Patient {
 	private String bed_id;
 
 	@NotNull(message = "Patient_Status should not be null")
-    @Enum(enumClass = PatientStatus.class, ignoreCase = true, message = "Please enter correct value {ADMITTED, VACANT}")
+    @Enum(enumClass = PatientStatus.class, ignoreCase = true, message = "Please enter correct value for PatientStatus {ADMITTED, VACANT}")
 	private String patientStatus;
+
+	public Patient(String patient_id, @NotNull(message = "Name should not be null") @Size(min = 2, message = "Name should have atleast 2 characters") String name, @NotNull(message = "DOB should not be null") String dob, @NotNull(message = "Bed_Id should not be null") String bed_id, @NotNull(message = "Patient_Status should not be null") String patientStatus) {
+		this.patient_id = patient_id;
+		this.name = name;
+		this.dob = dob;
+		this.bed_id = bed_id;
+		this.patientStatus = patientStatus;
+	}
 
 	public String getPatient_id() {
 		return patient_id;

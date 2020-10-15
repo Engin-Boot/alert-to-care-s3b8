@@ -29,8 +29,9 @@ public class OccupancyController {
 
 
     @PostMapping("/client/patient")
-    public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) throws PatientAlreadyExistsException, InvalidDateFormatException, BedDoesNotExistException, BedHasAlreadyBeenOccupiedException {
-       //First we are checking if bed is VACANT. ONLY THEN we are inserting patient
+    public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) throws PatientAlreadyExistsException, InvalidDateFormatException, BedDoesNotExistException, BedHasAlreadyBeenOccupiedException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
+       //First we are validating patient for DOB and status as ADMITTED. Then we are checking if bed is VACANT. ONLY THEN we are inserting patient
+        patientService.validatePatientDetails(patient);
         bedService.updateBedStatusWhenPatientAdmitted(patient.getBed_id());
         System.out.println("Bed Status HAS been updated");
         Patient savedPatient = patientService.savePatient(patient);

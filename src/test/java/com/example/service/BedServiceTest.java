@@ -2,12 +2,9 @@ package com.example.service;
 
 import com.example.entities.Bed;
 import com.example.entities.BedStatus;
-import com.example.entities.Client;
 import com.example.exceptions.BedDoesNotExistException;
 import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
-import com.example.exceptions.ClientAlreadyExistsException;
 import com.example.repository.BedRepository;
-import com.example.repository.ClientRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

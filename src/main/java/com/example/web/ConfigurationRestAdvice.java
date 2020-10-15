@@ -42,6 +42,13 @@ public class ConfigurationRestAdvice {
         return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
     }
 
+    @ExceptionHandler(PatientCreatedWithIncorrectStatusWhenAdmittedException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorMessage handlePatientCreatedWithIncorrectStatusWhenAdmittedException(PatientCreatedWithIncorrectStatusWhenAdmittedException ex){
+        ex.printStackTrace();
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
+    }
+
     @ExceptionHandler(BedHasAlreadyBeenOccupiedException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorMessage handleBedHasAlreadyBeenOccupiedException(BedHasAlreadyBeenOccupiedException ex){
