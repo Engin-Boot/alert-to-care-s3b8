@@ -1,13 +1,12 @@
 package com.example.entities;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+
+import com.example.customannotations.Enum;
 
 @Entity
 public class Client {
@@ -17,7 +16,7 @@ public class Client {
 	@Size(min=2, message="Client_Type should have atleast 2 characters")
 	private String client_type;
 	@NotNull(message = "Layout should not be null")
-	@Size(min=2, message="Layout should have atleast 2 characters")
+	@Enum(enumClass = BedLayout.class, ignoreCase = true, message = "Please enter correct value {Default, L_Layout, Parallel")
 	private String layout;
 	@NotNull
 	@Min(value = 1, message = "Min no of beds should be greater or equal to 1")
@@ -39,7 +38,7 @@ public class Client {
 		return layout;
 	}
 	public void setLayout(String layout) {
-		this.layout = layout;
+		this.layout = layout.toUpperCase();
 	}
 	public int getNo_of_beds() {
 		return no_of_beds;

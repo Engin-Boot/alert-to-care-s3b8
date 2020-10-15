@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import com.example.customannotations.Enum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Entity;
@@ -23,8 +24,8 @@ public class Patient {
 	private String bed_id;
 
 	@NotNull(message = "Patient_Status should not be null")
-	@Enumerated(EnumType.STRING)
-	private PatientStatus patientStatus;
+    @Enum(enumClass = PatientStatus.class, ignoreCase = true, message = "Please enter correct value {ADMITTED, VACANT}")
+	private String patientStatus;
 
 	public String getPatient_id() {
 		return patient_id;
@@ -53,11 +54,11 @@ public class Patient {
 		this.bed_id = bed_id;
 	}
 
-	public PatientStatus getPatientStatus() {
+	public String getPatientStatus() {
 		return patientStatus;
 	}
 
-	public void setPatientStatus(PatientStatus patientStatus) {
-		this.patientStatus = patientStatus;
+	public void setPatientStatus(String patientStatus) {
+		this.patientStatus = patientStatus.toUpperCase();
 	}
 }

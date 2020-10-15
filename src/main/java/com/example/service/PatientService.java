@@ -51,8 +51,8 @@ public class PatientService {
 
     public Patient dischargePatient(String patient_id) throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException {
         Patient patientToDischarge = getPatient(patient_id);
-        if(patientToDischarge.getPatientStatus() == PatientStatus.ADMITTED){
-            patientToDischarge.setPatientStatus(PatientStatus.DISCHARGED);
+        if(patientToDischarge.getPatientStatus().equalsIgnoreCase(PatientStatus.ADMITTED.toString())){
+            patientToDischarge.setPatientStatus(PatientStatus.DISCHARGED.toString());
             return patientRepository.save(patientToDischarge);
         }
         else{

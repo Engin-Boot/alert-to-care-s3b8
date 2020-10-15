@@ -27,13 +27,13 @@ public class BedService {
 
     public void createBeds(int no_of_beds, String client_id){
         for(int i=0;i<no_of_beds;i++){
-            Bed bed = new Bed(UUID.randomUUID().toString(), client_id, BedStatus.VACANT );
+            Bed bed = new Bed(UUID.randomUUID().toString(), client_id, BedStatus.VACANT.toString());
             bedRepository.save(bed);
         }
     }
 
     public boolean checkIfBedVacant(Optional<Bed> bed){
-        if(bed.get().getBedStatus() == BedStatus.VACANT){
+        if(bed.get().getBedStatus().equalsIgnoreCase(BedStatus.VACANT.toString())){
             return true;
         }
         return false;
@@ -43,7 +43,7 @@ public class BedService {
         Optional<Bed> bed = bedRepository.findById(bed_id);
         if(bed.isPresent()){
             if(checkIfBedVacant(bed)){
-                bed.get().setBedStatus(BedStatus.OCCUPIED);
+                bed.get().setBedStatus(BedStatus.OCCUPIED.toString());
                 bedRepository.save(bed.get());
             }
             else{
@@ -70,7 +70,7 @@ public class BedService {
 
     public void updateBedStatusWhenPatientDischarged(String bed_id){
         Bed bed = bedRepository.findById(bed_id).get();
-        bed.setBedStatus(BedStatus.VACANT);
+        bed.setBedStatus(BedStatus.VACANT.toString());
         bedRepository.save(bed);
     }
 

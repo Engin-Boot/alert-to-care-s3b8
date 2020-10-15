@@ -50,6 +50,4 @@ public class ClientService {
     public boolean checkIfClientExists(String client_id){
         return clientRepository.findById(client_id).isPresent();
     }
-
-
 }

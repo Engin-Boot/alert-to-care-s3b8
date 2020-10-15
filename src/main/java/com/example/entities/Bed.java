@@ -2,6 +2,8 @@ package com.example.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.example.customannotations.Enum;
+
 
 @Entity
 public class Bed {
@@ -11,15 +13,15 @@ public class Bed {
     @NotNull(message = "Client_Id should not be null")
     private String clientId;
     @NotNull(message = "BED Status should not be null")
-    @Enumerated(EnumType.STRING)
-    private BedStatus bedStatus;
+    @Enum(enumClass = BedStatus.class, ignoreCase = true, message = "Please enter correct value {VACANT, OCCUPIED, MAINTENANCE}")
+    private String bedStatus;
 
     public Bed(){}
 
-    public Bed(String bed_id, String clientId, BedStatus bedStatus) {
+    public Bed(String bed_id, String clientId, String bedStatus) {
         this.bed_id = bed_id;
         this.clientId = clientId;
-        this.bedStatus = bedStatus;
+        this.bedStatus = bedStatus.toUpperCase();
     }
 
     public String getClientId() {
@@ -30,12 +32,12 @@ public class Bed {
         this.clientId = clientId;
     }
 
-    public BedStatus getBedStatus() {
+    public String getBedStatus() {
         return bedStatus;
     }
 
-    public void setBedStatus(BedStatus bedStatus) {
-        this.bedStatus = bedStatus;
+    public void setBedStatus(String bedStatus) {
+        this.bedStatus = bedStatus.toUpperCase();
     }
 
     public String getBed_id() {
