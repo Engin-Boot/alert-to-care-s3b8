@@ -2,7 +2,9 @@ package com.example.web;
 
 import com.example.entities.ErrorMessage;
 import com.example.exceptions.*;
+import com.example.utility.Utility;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -66,6 +68,13 @@ public class ConfigurationRestAdvice {
     public ErrorMessage handlePatientHasAlreadyBeenDischargedException(PatientHasAlreadyBeenDischargedException ex){
         ex.printStackTrace();
         return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+        ex.printStackTrace();
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), "Validation failed for request body: "+ Utility.getAllErrorMessages(ex), LocalDateTime.now().toString());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.entities;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -7,9 +8,9 @@ public class Bed {
 
     @Id
     private String bed_id;
-
+    @NotNull(message = "Client_Id should not be null")
     private String clientId;
-
+    @NotNull(message = "BED Status should not be null")
     @Enumerated(EnumType.STRING)
     private BedStatus bedStatus;
 

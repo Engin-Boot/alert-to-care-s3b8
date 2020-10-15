@@ -6,16 +6,23 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
 public class Patient {
 	@Id
 	private String patient_id;
+	@NotNull(message = "Name should not be null")
+	@Size(min=2, message="Name should have atleast 2 characters")
 	private String name;
+	@NotNull(message = "DOB should not be null")
 	private String dob;
+	@NotNull(message = "Bed_Id should not be null")
 	private String bed_id;
 
+	@NotNull(message = "Patient_Status should not be null")
 	@Enumerated(EnumType.STRING)
 	private PatientStatus patientStatus;
 

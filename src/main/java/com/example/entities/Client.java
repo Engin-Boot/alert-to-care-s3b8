@@ -4,14 +4,23 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 public class Client {
 	@Id
 	private String client_id;
+	@NotNull(message = "Client_Type should not be null")
+	@Size(min=2, message="Client_Type should have atleast 2 characters")
 	private String client_type;
+	@NotNull(message = "Layout should not be null")
+	@Size(min=2, message="Layout should have atleast 2 characters")
 	private String layout;
+	@NotNull
+	@Min(value = 1, message = "Min no of beds should be greater or equal to 1")
 	private int no_of_beds;
 
 	public String getClient_id() {

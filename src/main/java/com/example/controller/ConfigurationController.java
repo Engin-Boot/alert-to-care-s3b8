@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -23,7 +24,8 @@ public class ConfigurationController {
     private BedService bedService;
 
     @PostMapping("/client/config")
-    public ResponseEntity<Client> createClient(@RequestBody Client client) throws ClientAlreadyExistsException {
+    public ResponseEntity<Client> createClient(@Valid @RequestBody Client client) throws ClientAlreadyExistsException {
+        System.out.println("CCCC");
         Client savedClient = clientService.saveClient(client);
         System.out.println("saving client");
         bedService.createBeds(client.getNo_of_beds(), client.getClient_id());
@@ -32,7 +34,7 @@ public class ConfigurationController {
     }
 
     @PutMapping("/client/{client_id}/config")
-    public ResponseEntity<Client> updateClient(@PathVariable(value = "client_id") UUID client_id, @RequestBody Client client) {
+    public ResponseEntity<Client> updateClient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody Client client) {
         int no_of_beds_to_add = client.getNo_of_beds();
         Client savedClient = clientService.updateClient(client, client_id.toString());
         System.out.println("Updating client");
