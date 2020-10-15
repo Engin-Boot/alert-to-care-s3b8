@@ -36,7 +36,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void given_New_Client_When_Saved_No_Exception() throws ClientAlreadyExistsException {
+    public void given_New_Client_When_Saved_Then_Throw_No_Exception() throws ClientAlreadyExistsException {
 
         Client client = new Client(UUID.randomUUID().toString(), "typ1", "DEFAULT", 3);
 
@@ -51,7 +51,7 @@ public class ClientServiceTest {
     }
 
     @Test(expected = ClientAlreadyExistsException.class)
-    public void given_Existing_Client_When_Saved_Throw_Exception() throws ClientAlreadyExistsException {
+    public void given_Existing_Client_When_Saved_Then_Throw_Exception() throws ClientAlreadyExistsException {
         String existingClientId = UUID.randomUUID().toString();
         Client existingClient = new Client(existingClientId, "typ2", "DEFAULT", 5);
         Client clientToSave = new Client(existingClientId, "typ1", "DEFAULT", 3);
@@ -62,7 +62,7 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void given_Existing_Client_When_Updated_No_Exception() throws ClientAlreadyExistsException {
+    public void given_Existing_Client_When_Updated_Then_Throw_No_Exception() throws ClientAlreadyExistsException {
         String existingClientId = UUID.randomUUID().toString();
         int no_of_beds_to_add = 3;
         Client existingClient = new Client(existingClientId, "typ2", "DEFAULT", 5);

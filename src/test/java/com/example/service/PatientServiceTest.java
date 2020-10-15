@@ -1,123 +1,112 @@
-//package com.example.service;
-//
-//import com.example.entities.Client;
-//import com.example.entities.Patient;
-//import com.example.entities.PatientStatus;
-//import com.example.exceptions.ClientAlreadyExistsException;
-//import com.example.repository.ClientRepository;
-//import com.example.repository.PatientRepository;
-//import org.junit.Assert;
-//import org.junit.Before;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
-//import org.mockito.ArgumentCaptor;
-//import org.mockito.Captor;
-//import org.mockito.Mock;
-//import org.mockito.junit.MockitoJUnitRunner;
-//
-//import java.util.Optional;
-//import java.util.UUID;
-//
-//import static org.mockito.ArgumentMatchers.any;
-//import static org.mockito.Mockito.verify;
-//import static org.mockito.Mockito.when;
-//
-//@RunWith(MockitoJUnitRunner.class)
-//public class PatientServiceTest {
-//
-//    @Mock
-//    PatientRepository patientRepository;
-//
-//    PatientService patientService;
-//
-//    @Captor
-//    ArgumentCaptor<Patient> patientArgumentCaptor;
-//
-//    @Before
-//    public void setUp() {
-//        patientService = new PatientService(patientRepository);
-//    }
-//
-//    @Test
-//    public void given_New_Patient_When_Saved_No_Exception() {
-//        String bed_id = UUID.randomUUID().toString();
-//        Patient patient = new Patient(UUID.randomUUID().toString(), "name1", "1998-04-01", bed_id, PatientStatus.ADMITTED);
-//
-//        when(clientRepository.findById(any())).thenReturn(Optional.empty());
-//        clientService.saveClient(client);
-//
-//        verify(clientRepository).save(clientArgumentCaptor.capture());
-//
-//        Assert.assertEquals(client.getNo_of_beds(), clientArgumentCaptor.getValue().getNo_of_beds());
-//        Assert.assertEquals(client.getClient_type(), clientArgumentCaptor.getValue().getClient_type());
-//        Assert.assertEquals(client.getLayout(), clientArgumentCaptor.getValue().getLayout());
-//    }
-//
-//    @Test(expected = ClientAlreadyExistsException.class)
-//    public void given_Existing_Client_When_Saved_Throw_Exception() throws ClientAlreadyExistsException {
-//        String existingClientId = UUID.randomUUID().toString();
-//        Client existingClient = new Client(existingClientId, "typ2", "DEFAULT", 5);
-//        Client clientToSave = new Client(existingClientId, "typ1", "DEFAULT", 3);
-//
-//        when(clientRepository.findById(any())).thenReturn(Optional.of(existingClient));
-//
-//        clientService.saveClient(clientToSave);
-//    }
-//
-//    @Test
-//    public void given_Existing_Client_When_Updated_No_Exception() throws ClientAlreadyExistsException {
-//        String existingClientId = UUID.randomUUID().toString();
-//        int no_of_beds_to_add = 3;
-//        Client existingClient = new Client(existingClientId, "typ2", "DEFAULT", 5);
-//        Client clientToSave = new Client(existingClientId, "typ1", "DEFAULT", no_of_beds_to_add);
-//
-//        when(clientRepository.findById(any())).thenReturn(Optional.of(existingClient));
-//        clientService.updateClient(clientToSave, existingClientId);
-//
-//        verify(clientRepository).save(clientArgumentCaptor.capture());
-//
-//        Assert.assertEquals(8, clientArgumentCaptor.getValue().getNo_of_beds());
-//        Assert.assertEquals("typ1", clientArgumentCaptor.getValue().getClient_type());
-//        Assert.assertEquals("DEFAULT", clientArgumentCaptor.getValue().getLayout());
-//    }
-//
-//    @Test
-//    public void when_New_Client_Tries_To_Update_Then_Saved_With_No_Exception() throws ClientAlreadyExistsException {
-//        int no_of_beds_to_add = 3;
-//        String newClientId = UUID.randomUUID().toString();
-//        Client clientToSave = new Client(newClientId, "typ1", "DEFAULT", no_of_beds_to_add);
-//
-//        when(clientRepository.findById(any())).thenReturn(Optional.empty());
-//        clientService.updateClient(clientToSave, newClientId);
-//
-//        verify(clientRepository).save(clientArgumentCaptor.capture());
-//
-//        Assert.assertEquals(3, clientArgumentCaptor.getValue().getNo_of_beds());
-//        Assert.assertEquals("typ1", clientArgumentCaptor.getValue().getClient_type());
-//        Assert.assertEquals("DEFAULT", clientArgumentCaptor.getValue().getLayout());
-//    }
-//
-//    @Test
-//    public void given_Existing_Client_When_Checked_If_It_Exists_Then_Throw_No_Exception(){
-//        String existingClientId = UUID.randomUUID().toString();
-//        Client existingClient = new Client(existingClientId, "typ1", "DEFAULT", 3);
-//
-//        when(clientRepository.findById(any())).thenReturn(Optional.of(existingClient));
-//        boolean checkIfExists = clientService.checkIfClientExists(existingClientId);
-//
-//        Assert.assertEquals(true, checkIfExists);
-//
-//    }
-//
-//    @Test
-//    public void given_New_Client_When_Checked_If_It_Exists_Then_Throw_No_Exception(){
-//        String newClientId = UUID.randomUUID().toString();
-//
-//        when(clientRepository.findById(any())).thenReturn(Optional.empty());
-//        boolean checkIfExists = clientService.checkIfClientExists(newClientId);
-//
-//        Assert.assertEquals(false, checkIfExists);
-//    }
-//
-//}
-//
+package com.example.service;
+
+import com.example.entities.Client;
+import com.example.entities.Patient;
+import com.example.entities.PatientStatus;
+import com.example.exceptions.*;
+import com.example.repository.ClientRepository;
+import com.example.repository.PatientRepository;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
+public class PatientServiceTest {
+
+    @Mock
+    PatientRepository patientRepository;
+
+    PatientService patientService;
+
+    @Captor
+    ArgumentCaptor<Patient> patientArgumentCaptor;
+
+    @Before
+    public void setUp() {
+        patientService = new PatientService(patientRepository);
+    }
+
+    @Test
+    public void given_New_Patient_When_Saved_Then_Throw_No_Exception() throws PatientAlreadyExistsException {
+        String bed_id = UUID.randomUUID().toString();
+        Patient patient = new Patient(UUID.randomUUID().toString(), "name1", "1998-04-01", bed_id, PatientStatus.ADMITTED.toString());
+
+        when(patientRepository.findById(any())).thenReturn(Optional.empty());
+        patientService.savePatient(patient);
+
+        verify(patientRepository).save(patientArgumentCaptor.capture());
+
+        Assert.assertEquals(patient.getPatientStatus(), patientArgumentCaptor.getValue().getPatientStatus());
+        Assert.assertEquals(patient.getDob(), patientArgumentCaptor.getValue().getDob());
+        Assert.assertEquals(patient.getName(), patientArgumentCaptor.getValue().getName());
+        Assert.assertEquals(patient.getBed_id(), patientArgumentCaptor.getValue().getBed_id());
+    }
+
+    @Test(expected = PatientAlreadyExistsException.class)
+    public void given_Existing_Patient_When_Saved_Then_Throw_Exception() throws PatientAlreadyExistsException {
+        String existingPatientId = UUID.randomUUID().toString();
+        String bed_id = UUID.randomUUID().toString();
+        Patient existingPatient = new Patient(existingPatientId,"name1", "1998-04-01", bed_id, PatientStatus.ADMITTED.toString());
+        Patient patientToSave = new Patient(existingPatientId, "name1", "1998-04-01", bed_id, PatientStatus.ADMITTED.toString());
+
+        when(patientRepository.findById(any())).thenReturn(Optional.of(existingPatient));
+
+        patientService.savePatient(patientToSave);
+    }
+
+    @Test(expected = InvalidDateFormatException.class)
+    public void given_Patient_With_Invalid_DOB_When_Validated_Then_Throw_Exception() throws InvalidDateFormatException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
+        Patient patient = new Patient(UUID.randomUUID().toString(),"name1", "20-05-1998", UUID.randomUUID().toString(), PatientStatus.ADMITTED.toString());
+        patientService.validatePatientDetails(patient);
+    }
+
+    @Test(expected = PatientCreatedWithIncorrectStatusWhenAdmittedException.class)
+    public void given_Patient_With_Wrong_AdmissionStatus_When_Validated_Then_Throw_Exception() throws InvalidDateFormatException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
+        Patient patient = new Patient(UUID.randomUUID().toString(),"name1", "1998-05-15", UUID.randomUUID().toString(), PatientStatus.DISCHARGED.toString());
+        patientService.validatePatientDetails(patient);
+    }
+
+    @Test
+    public void given_Valid_Patient_When_Validated_Then_Throw_No_Exception() throws InvalidDateFormatException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
+        Patient patient = new Patient(UUID.randomUUID().toString(),"name1", "1998-05-15", UUID.randomUUID().toString(), PatientStatus.ADMITTED.toString());
+        boolean valid = patientService.validatePatientDetails(patient);
+        Assert.assertTrue(valid);
+    }
+
+    @Test(expected = PatientDoesNotExistException.class)
+    public void given_PatientId_Which_Does_Not_Exist_When_Discharging_Patient_Then_Throw_Exception() throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException {
+        String non_existing_patient_id = UUID.randomUUID().toString();
+        when(patientRepository.findById(any())).thenReturn(Optional.empty());
+
+        patientService.dischargePatient(non_existing_patient_id);
+    }
+
+    @Test
+    public void given_Existing_PatientId_When_Discharging_Patient_Then_Throw_No_Exception() throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException {
+        String existing_patient_id = UUID.randomUUID().toString();
+        Patient existingPatient = new Patient(existing_patient_id,"name1", "1998-05-15", UUID.randomUUID().toString(), PatientStatus.ADMITTED.toString());
+        when(patientRepository.findById(any())).thenReturn(Optional.of(existingPatient));
+
+        patientService.dischargePatient(existing_patient_id);
+
+        verify(patientRepository).save(patientArgumentCaptor.capture());
+
+        Assert.assertEquals(existingPatient.getPatientStatus(), patientArgumentCaptor.getValue().getPatientStatus());
+        Assert.assertEquals(existingPatient.getDob(), patientArgumentCaptor.getValue().getDob());
+        Assert.assertEquals(existingPatient.getName(), patientArgumentCaptor.getValue().getName());
+        Assert.assertEquals(existingPatient.getBed_id(), patientArgumentCaptor.getValue().getBed_id());
+    }
+}
+
