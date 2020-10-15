@@ -22,6 +22,13 @@ public class Client {
 	@Min(value = 1, message = "Min no of beds should be greater or equal to 1")
 	private int no_of_beds;
 
+	public Client(String client_id, @NotNull(message = "Client_Type should not be null") @Size(min = 2, message = "Client_Type should have atleast 2 characters") String client_type, @NotNull(message = "Layout should not be null") String layout, @NotNull @Min(value = 1, message = "Min no of beds should be greater or equal to 1") int no_of_beds) {
+		this.client_id = client_id;
+		this.client_type = client_type;
+		this.layout = layout.toUpperCase();
+		this.no_of_beds = no_of_beds;
+	}
+
 	public String getClient_id() {
 		return client_id;
 	}

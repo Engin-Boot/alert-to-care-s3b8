@@ -19,16 +19,6 @@ public class ClientService {
     }
 
 
-
-    public Client getClientById(String id){
-        if(clientRepository.findById(id).isPresent()) {
-            return clientRepository.findById(id).get();
-        }
-        else{
-            return null;
-        }
-    }
-
     public Client saveClient(Client client) throws ClientAlreadyExistsException {
         String client_id = UUID.randomUUID().toString();
         client.setClient_id(client_id);
