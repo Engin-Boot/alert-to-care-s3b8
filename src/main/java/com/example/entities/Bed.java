@@ -18,10 +18,10 @@ public class Bed {
 
     public Bed(){}
 
-    public Bed(String bed_id, String clientId, String bedStatus) {
+    public Bed(String bed_id, @NotNull(message = "Client_Id should not be null") String clientId, @NotNull(message = "BED Status should not be null") String bedStatus) {
         this.bed_id = bed_id;
         this.clientId = clientId;
-        this.bedStatus = bedStatus.toUpperCase();
+        this.bedStatus = bedStatus;
     }
 
     public String getClientId() {

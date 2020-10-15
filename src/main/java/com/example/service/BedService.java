@@ -21,10 +21,6 @@ public class BedService {
     }
 
 
-    public void save(Bed bed) {
-        bedRepository.save(bed);
-    }
-
     public void createBeds(int no_of_beds, String client_id){
         for(int i=0;i<no_of_beds;i++){
             Bed bed = new Bed(UUID.randomUUID().toString(), client_id, BedStatus.VACANT.toString());
@@ -32,7 +28,7 @@ public class BedService {
         }
     }
 
-    public boolean checkIfBedVacant(Optional<Bed> bed){
+    private boolean checkIfBedVacant(Optional<Bed> bed){
         if(bed.get().getBedStatus().equalsIgnoreCase(BedStatus.VACANT.toString())){
             return true;
         }
@@ -44,7 +40,7 @@ public class BedService {
         if(bed.isPresent()){
             if(checkIfBedVacant(bed)){
                 bed.get().setBedStatus(BedStatus.OCCUPIED.toString());
-                bedRepository.save(bed.get());
+                return bedRepository.save(bed.get());
             }
             else{
                 throw new BedHasAlreadyBeenOccupiedException("Bed with id = " + bed_id + " has already been occupied");
@@ -53,7 +49,6 @@ public class BedService {
         else{
             throw new BedDoesNotExistException("Bed with id = " + bed_id + " does not exist");
         }
-        return bed.get();
     }
 
     public Map<String,String> getAllBedStatusByClientId(String client_id) throws BedDoesNotExistException {
