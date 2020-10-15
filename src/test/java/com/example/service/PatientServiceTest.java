@@ -108,5 +108,14 @@ public class PatientServiceTest {
         Assert.assertEquals(existingPatient.getName(), patientArgumentCaptor.getValue().getName());
         Assert.assertEquals(existingPatient.getBed_id(), patientArgumentCaptor.getValue().getBed_id());
     }
+
+    @Test(expected = PatientHasAlreadyBeenDischargedException.class)
+    public void given_Patient_Already_Been_Discharged_When_Discharging_That_Patient_Again_Then_Throw_Exception() throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException {
+        String discharged_patient_id = UUID.randomUUID().toString();
+        Patient dischargedPatient = new Patient(discharged_patient_id,"name1", "1998-05-15", UUID.randomUUID().toString(), PatientStatus.DISCHARGED.toString());
+        when(patientRepository.findById(any())).thenReturn(Optional.of(dischargedPatient));
+
+        patientService.dischargePatient(discharged_patient_id);
+    }
 }
 
