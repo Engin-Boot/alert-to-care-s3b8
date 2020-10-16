@@ -70,6 +70,20 @@ public class ConfigurationRestAdvice {
         return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
     }
 
+    @ExceptionHandler(DeviceDoesNotExistException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleDeviceDoesNotExistException(DeviceDoesNotExistException ex){
+        ex.printStackTrace();
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
+    }
+
+    @ExceptionHandler(DeviceNotAssociatedWithBedException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleDeviceNotAssociatedWithBedException(DeviceNotAssociatedWithBedException ex){
+        ex.printStackTrace();
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
+    }
+
     @ExceptionHandler(ClientDoesNotExistException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorMessage handleClientDoesNotExistException(ClientDoesNotExistException ex){

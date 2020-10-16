@@ -3,9 +3,11 @@ package com.example.service;
 import com.example.dto.BedDTO;
 import com.example.entities.Bed;
 import com.example.entities.BedStatus;
+import com.example.entities.Device;
 import com.example.exceptions.BedDoesNotBelongToSpecifiedClientException;
 import com.example.exceptions.BedDoesNotExistException;
 import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
+import com.example.exceptions.DeviceDoesNotExistException;
 import com.example.mapper.BedMapper;
 import com.example.repository.BedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +88,16 @@ public class BedService {
         Bed bed = bedRepository.findById(bed_id).get();
         bed.setBedStatus(BedStatus.VACANT.toString());
         bedRepository.save(bed);
+    }
+
+    public Bed getBed(String bed_id) throws BedDoesNotExistException {
+        Optional<Bed> bed = bedRepository.findById(bed_id);
+        if(bed.isPresent()){
+            return bed.get();
+        }
+        else{
+            throw new BedDoesNotExistException("Bed does not exist with id = "+bed_id);
+        }
     }
 
 

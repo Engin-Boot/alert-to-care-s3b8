@@ -5,6 +5,7 @@ import com.example.entities.Client;
 import com.example.exceptions.ClientAlreadyExistsException;
 import com.example.service.BedService;
 import com.example.service.ClientService;
+import com.example.service.DeviceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class ConfigurationController {
     @Autowired
     private BedService bedService;
 
+    @Autowired
+    private DeviceService deviceService;
+
     @PostMapping("/client/config")
     public ResponseEntity<Client> createClient(@Valid @RequestBody ClientDTO clientDTO) throws ClientAlreadyExistsException {
         System.out.println("CCCC");
@@ -30,6 +34,8 @@ public class ConfigurationController {
         System.out.println("saving client");
         bedService.createBeds(savedClient.getNo_of_beds(), savedClient.getClient_id());
         System.out.println("saving beds");
+        deviceService.createDevices(savedClient.getNo_of_beds());
+        System.out.println("saving devices");
         return new ResponseEntity<Client>(savedClient, HttpStatus.CREATED);
     }
 

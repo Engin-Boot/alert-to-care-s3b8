@@ -1,10 +1,12 @@
 package com.example.controller;
 
 import com.example.dto.PatientDTO;
+import com.example.entities.Device;
 import com.example.entities.Patient;
 import com.example.exceptions.*;
 import com.example.service.BedService;
 import com.example.service.ClientService;
+import com.example.service.DeviceService;
 import com.example.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +30,9 @@ public class OccupancyController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private DeviceService deviceService;
+
 
     @PostMapping("/client/{client_id}/patient")
     public ResponseEntity<Patient> createPatient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody PatientDTO patientDTO) throws PatientAlreadyExistsException, InvalidDateFormatException, BedDoesNotExistException, BedHasAlreadyBeenOccupiedException, PatientCreatedWithIncorrectStatusWhenAdmittedException, BedDoesNotBelongToSpecifiedClientException {
@@ -38,6 +43,7 @@ public class OccupancyController {
         System.out.println("Bed Status HAS been updated");
         Patient savedPatient = patientService.savePatient(patientDTO, client_id.toString());
         System.out.println("saving patient");
+        deviceService.associateDeviceToBed(patientDTO.getBed_id());
         return new ResponseEntity<Patient>(savedPatient, HttpStatus.CREATED);
     }
 
@@ -57,7 +63,7 @@ public class OccupancyController {
     public ResponseEntity<Patient> dischargePatient(@PathVariable(value = "client_id") UUID client_id, @PathVariable(value = "patient_id") UUID patient_id) throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException, PatientDoesNotBelongToSpecifiedClientException {
 
         Patient dischargedPatient = patientService.dischargePatient(patient_id.toString(), client_id.toString());
-        bedService.updateBedStatusWhenPatientDischarged(dischargedPatient.getBed_id());
+        bedService.updateBedStatusWhenPatientDischarged(dischargedPatient.getBedId());
         return new ResponseEntity<Patient>(dischargedPatient, HttpStatus.OK);
     }
 

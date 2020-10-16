@@ -65,6 +65,16 @@ public class PatientService {
         }
     }
 
+    public Patient getPatientByBedId(String bed_id) throws PatientDoesNotExistException {
+        Patient patient = patientRepository.findByBedId(bed_id);
+        if(patient != null){
+            return patient;
+        }
+        else{
+            throw new PatientDoesNotExistException("Patient does not exist with bedId = "+bed_id);
+        }
+    }
+
     public Patient dischargePatient(String patient_id, String client_id) throws PatientHasAlreadyBeenDischargedException, PatientDoesNotExistException, PatientDoesNotBelongToSpecifiedClientException {
         Patient patientToDischarge = getPatient(patient_id);
         if(patientToDischarge.getClientId().equals(client_id)) {

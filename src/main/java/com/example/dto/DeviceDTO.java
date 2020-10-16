@@ -13,12 +13,11 @@ public class DeviceDTO {
 	@NotNull(message = "Device Status can not be null")
     @Enum(enumClass = DeviceStatus.class, ignoreCase = true, message = "Please enter correct value for DeviceStatus {INUSE, NOTINUSE}")
 	private String deviceStatus;
-	@NotNull(message = "Bed Id can not be null")
 	private String bedId;
 
 	public DeviceDTO(){}
 
-	public DeviceDTO(String deviceId, @NotNull(message = "DeviceType can not be null") String deviceType, @NotNull(message = "Device Status can not be null") String deviceStatus, @NotNull(message = "Bed Id can not be null") String bedId) {
+	public DeviceDTO(String deviceId, @NotNull(message = "DeviceType can not be null") String deviceType, @NotNull(message = "Device Status can not be null") String deviceStatus, String bedId) {
 		this.deviceId = deviceId;
 		this.deviceType = deviceType;
 		this.deviceStatus = deviceStatus;

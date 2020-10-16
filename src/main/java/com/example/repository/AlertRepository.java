@@ -1,14 +1,14 @@
 package com.example.repository;
 
+import com.example.entities.Alert;
 import com.example.entities.Bed;
-import com.example.entities.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface PatientRepository extends JpaRepository<Patient, String> {
+public interface AlertRepository extends JpaRepository<Alert, String> {
 
-    public Patient findByBedId(String bed_id);
+
 }

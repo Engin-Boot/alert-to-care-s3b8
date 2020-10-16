@@ -1,11 +1,7 @@
 package com.example.entities;
 
-import com.example.customannotations.Enum;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 public class Patient {
@@ -13,15 +9,15 @@ public class Patient {
 	private String patient_id;
 	private String name;
 	private String dob;
-	private String bed_id;
+	private String bedId;
 	private String patientStatus;
 	private String clientId;
 
-	public Patient(String patient_id, String name, String dob, String bed_id, String patientStatus, String clientId) {
+	public Patient(String patient_id, String name, String dob, String bedId, String patientStatus, String clientId) {
 		this.patient_id = patient_id;
 		this.name = name;
 		this.dob = dob;
-		this.bed_id = bed_id;
+		this.bedId = bedId;
 		this.patientStatus = patientStatus;
 		this.clientId = clientId;
 	}
@@ -49,12 +45,12 @@ public class Patient {
 		this.dob = dob;
 	}
 
-	public String getBed_id() {
-		return bed_id;
+	public String getBedId() {
+		return bedId;
 	}
 
-	public void setBed_id(String bed_id) {
-		this.bed_id = bed_id;
+	public void setBedId(String bedId) {
+		this.bedId = bedId;
 	}
 
 	public String getPatientStatus() {
