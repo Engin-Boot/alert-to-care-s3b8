@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.dto.ClientDTO;
 import com.example.entities.Client;
 import com.example.exceptions.ClientAlreadyExistsException;
 import com.example.service.BedService;
@@ -23,11 +24,11 @@ public class ConfigurationController {
     private BedService bedService;
 
     @PostMapping("/client/config")
-    public ResponseEntity<Client> createClient(@Valid @RequestBody Client client) throws ClientAlreadyExistsException {
+    public ResponseEntity<Client> createClient(@Valid @RequestBody ClientDTO clientDTO) throws ClientAlreadyExistsException {
         System.out.println("CCCC");
-        Client savedClient = clientService.saveClient(client);
+        Client savedClient = clientService.saveClient(clientDTO);
         System.out.println("saving client");
-        bedService.createBeds(client.getNo_of_beds(), client.getClient_id());
+        bedService.createBeds(savedClient.getNo_of_beds(), savedClient.getClient_id());
         System.out.println("saving beds");
         return new ResponseEntity<Client>(savedClient, HttpStatus.CREATED);
     }

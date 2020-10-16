@@ -11,10 +11,18 @@ public class Device {
 	@Id
 	private String deviceId;
 	private String deviceType;
-	@NotNull(message = "Device Status can not be null")
-    @Enum(enumClass = DeviceStatus.class, ignoreCase = true, message = "Please enter correct value for DeviceStatus {INUSE, NOTINUSE}")
 	private String deviceStatus;
 	private String bedId;
+
+	public Device(){}
+
+	public Device(String deviceId, String deviceType, String deviceStatus, String bedId) {
+		this.deviceId = deviceId;
+		this.deviceType = deviceType;
+		this.deviceStatus = deviceStatus;
+		this.bedId = bedId;
+	}
+
 	public String getDeviceId() {
 		return deviceId;
 	}

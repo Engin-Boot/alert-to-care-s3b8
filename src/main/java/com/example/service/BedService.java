@@ -1,9 +1,11 @@
 package com.example.service;
 
+import com.example.dto.BedDTO;
 import com.example.entities.Bed;
 import com.example.entities.BedStatus;
 import com.example.exceptions.BedDoesNotExistException;
 import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
+import com.example.mapper.BedMapper;
 import com.example.repository.BedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +17,20 @@ import java.util.*;
 public class BedService {
     BedRepository bedRepository;
 
+    BedMapper bedMapper;
+
     @Autowired
-    public BedService(BedRepository bedRepository) {
+    public BedService(BedRepository bedRepository,BedMapper bedMapper) {
         this.bedRepository = bedRepository;
+        this.bedMapper = bedMapper;
     }
 
 
     public void createBeds(int no_of_beds, String client_id){
         for(int i=0;i<no_of_beds;i++){
-            Bed bed = new Bed(UUID.randomUUID().toString(), client_id, BedStatus.VACANT.toString());
+            String bed_id = UUID.randomUUID().toString();
+            BedDTO bedDTO = new BedDTO(client_id, BedStatus.VACANT.toString());
+            Bed bed = bedMapper.mapBedDTOtoBedEntity(bedDTO);
             bedRepository.save(bed);
         }
     }

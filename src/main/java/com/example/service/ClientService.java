@@ -1,7 +1,9 @@
 package com.example.service;
 
+import com.example.dto.ClientDTO;
 import com.example.entities.Client;
 import com.example.exceptions.ClientAlreadyExistsException;
+import com.example.mapper.ClientMapper;
 import com.example.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,17 @@ public class ClientService {
 
     ClientRepository clientRepository;
 
+    ClientMapper clientMapper;
+
     @Autowired
-    public ClientService(ClientRepository clientRepository){
+    public ClientService(ClientRepository clientRepository,ClientMapper clientMapper){
         this.clientRepository = clientRepository;
+        this.clientMapper = clientMapper;
     }
 
 
-    public Client saveClient(Client client) throws ClientAlreadyExistsException {
+    public Client saveClient(ClientDTO clientDTO) throws ClientAlreadyExistsException {
+        Client client = clientMapper.mapClientDTOtoClientEntity(clientDTO);
         String client_id = UUID.randomUUID().toString();
         client.setClient_id(client_id);
         if(clientRepository.findById(client_id).isPresent()) {

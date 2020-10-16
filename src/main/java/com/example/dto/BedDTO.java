@@ -1,24 +1,23 @@
-package com.example.entities;
+package com.example.dto;
 
 import com.example.customannotations.Enum;
+import com.example.entities.BedStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+public class BedDTO {
 
-@Entity
-public class Bed {
-
-    @Id
-    private String bed_id;
+    @NotNull(message = "Client_Id should not be null")
     private String clientId;
+    @NotNull(message = "BED Status should not be null")
+    @Enum(enumClass = BedStatus.class, ignoreCase = true, message = "Please enter correct value for BedStatus {VACANT, OCCUPIED, MAINTENANCE}")
     private String bedStatus;
 
-    public Bed(){}
+    public BedDTO(){}
 
-    public Bed(String bed_id, String clientId, String bedStatus) {
-        this.bed_id = bed_id;
+    public BedDTO(@NotNull(message = "Client_Id should not be null") String clientId, @NotNull(message = "BED Status should not be null") String bedStatus) {
         this.clientId = clientId;
         this.bedStatus = bedStatus;
     }
@@ -38,12 +37,4 @@ public class Bed {
     public void setBedStatus(String bedStatus) {
         this.bedStatus = bedStatus.toUpperCase();
     }
-
-    public String getBed_id() {
-        return bed_id;
-    }
-    public void setBed_id(String bed_id) {
-        this.bed_id = bed_id;
-    }
-
 }
