@@ -28,6 +28,20 @@ public class ConfigurationRestAdvice {
         return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
     }
 
+    @ExceptionHandler(BedDoesNotBelongToSpecifiedClientException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleBedDoesNotBelongToSpecifiedClientException(BedDoesNotBelongToSpecifiedClientException ex){
+        ex.printStackTrace();
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
+    }
+
+    @ExceptionHandler(PatientDoesNotBelongToSpecifiedClientException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorMessage handlePatientDoesNotBelongToSpecifiedClientException(PatientDoesNotBelongToSpecifiedClientException ex){
+        ex.printStackTrace();
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
+    }
+
     @ExceptionHandler(InvalidDateFormatException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorMessage handleInvalidDateFormatException(InvalidDateFormatException ex){

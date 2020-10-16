@@ -27,11 +27,12 @@ public class PatientService {
     }
 
 
-    public Patient savePatient(PatientDTO patientDTO) throws PatientAlreadyExistsException{
+    public Patient savePatient(PatientDTO patientDTO, String client_id) throws PatientAlreadyExistsException{
         String patient_id = UUID.randomUUID().toString();
         Patient patient = patientMapper.mapPatientDTOtoPatientEntity(patientDTO);
         patient.setPatientStatus(PatientStatus.ADMITTED.toString());
         patient.setPatient_id(patient_id);
+        patient.setClientId(client_id);
         if(patientRepository.findById(patient_id).isPresent()) {
             throw new PatientAlreadyExistsException("Patient with id = "+patient_id + " already exists");
         }
@@ -64,14 +65,18 @@ public class PatientService {
         }
     }
 
-    public Patient dischargePatient(String patient_id) throws PatientHasAlreadyBeenDischargedException, PatientDoesNotExistException {
+    public Patient dischargePatient(String patient_id, String client_id) throws PatientHasAlreadyBeenDischargedException, PatientDoesNotExistException, PatientDoesNotBelongToSpecifiedClientException {
         Patient patientToDischarge = getPatient(patient_id);
-        if(patientToDischarge.getPatientStatus().equalsIgnoreCase(PatientStatus.ADMITTED.toString())){
-            patientToDischarge.setPatientStatus(PatientStatus.DISCHARGED.toString());
-            return patientRepository.save(patientToDischarge);
+        if(patientToDischarge.getClientId().equals(client_id)) {
+            if (patientToDischarge.getPatientStatus().equalsIgnoreCase(PatientStatus.ADMITTED.toString())) {
+                patientToDischarge.setPatientStatus(PatientStatus.DISCHARGED.toString());
+                return patientRepository.save(patientToDischarge);
+            } else {
+                throw new PatientHasAlreadyBeenDischargedException("Patient with id = " + patient_id + " has already been discahrged");
+            }
         }
         else{
-            throw new PatientHasAlreadyBeenDischargedException("Patient with id = "+ patient_id+ " has already been discahrged");
+            throw new PatientDoesNotBelongToSpecifiedClientException("Patient with id = "+patient_id + " is not associated with clientId = "+client_id);
         }
     }
 }

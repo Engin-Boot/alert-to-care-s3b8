@@ -44,6 +44,10 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
+//    public boolean checkifClientContainsSpecifiedBed(String bed_id){
+//        clientRepository.f
+//    }
+
     public boolean checkIfClientExists(String client_id){
         return clientRepository.findById(client_id).isPresent();
     }

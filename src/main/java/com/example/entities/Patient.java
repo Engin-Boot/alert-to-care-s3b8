@@ -11,27 +11,22 @@ import javax.validation.constraints.Size;
 public class Patient {
 	@Id
 	private String patient_id;
-	@NotNull(message = "Name should not be null")
-	@Size(min=2, message="Name should have atleast 2 characters")
 	private String name;
-	@NotNull(message = "DOB should not be null")
 	private String dob;
-	@NotNull(message = "Bed_Id should not be null")
 	private String bed_id;
-
-	@NotNull(message = "Patient_Status should not be null")
-    @Enum(enumClass = PatientStatus.class, ignoreCase = true, message = "Please enter correct value for PatientStatus {ADMITTED, VACANT}")
 	private String patientStatus;
+	private String clientId;
 
-	public Patient(String patient_id, @NotNull(message = "Name should not be null") @Size(min = 2, message = "Name should have atleast 2 characters") String name, @NotNull(message = "DOB should not be null") String dob, @NotNull(message = "Bed_Id should not be null") String bed_id, @NotNull(message = "Patient_Status should not be null") String patientStatus) {
+	public Patient(String patient_id, String name, String dob, String bed_id, String patientStatus, String clientId) {
 		this.patient_id = patient_id;
 		this.name = name;
 		this.dob = dob;
 		this.bed_id = bed_id;
 		this.patientStatus = patientStatus;
+		this.clientId = clientId;
 	}
 
-    public Patient() {
+	public Patient() {
 
     }
 
@@ -68,5 +63,13 @@ public class Patient {
 
 	public void setPatientStatus(String patientStatus) {
 		this.patientStatus = patientStatus.toUpperCase();
+	}
+
+	public String getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 }

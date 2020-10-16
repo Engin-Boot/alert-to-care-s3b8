@@ -29,13 +29,14 @@ public class OccupancyController {
     private ClientService clientService;
 
 
-    @PostMapping("/client/patient")
-    public ResponseEntity<Patient> createPatient(@Valid @RequestBody PatientDTO patientDTO) throws PatientAlreadyExistsException, InvalidDateFormatException, BedDoesNotExistException, BedHasAlreadyBeenOccupiedException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
+    @PostMapping("/client/{client_id}/patient")
+    public ResponseEntity<Patient> createPatient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody PatientDTO patientDTO) throws PatientAlreadyExistsException, InvalidDateFormatException, BedDoesNotExistException, BedHasAlreadyBeenOccupiedException, PatientCreatedWithIncorrectStatusWhenAdmittedException, BedDoesNotBelongToSpecifiedClientException {
        //First we are validating patient for DOB and status as ADMITTED. Then we are checking if bed is VACANT. ONLY THEN we are inserting patient
+
         patientService.validatePatientDetails(patientDTO);
-        bedService.updateBedStatusWhenPatientAdmitted(patientDTO.getBed_id());
+        bedService.updateBedStatusWhenPatientAdmitted(patientDTO.getBed_id(), client_id.toString());
         System.out.println("Bed Status HAS been updated");
-        Patient savedPatient = patientService.savePatient(patientDTO);
+        Patient savedPatient = patientService.savePatient(patientDTO, client_id.toString());
         System.out.println("saving patient");
         return new ResponseEntity<Patient>(savedPatient, HttpStatus.CREATED);
     }
@@ -52,10 +53,10 @@ public class OccupancyController {
         }
     }
 
-    @PutMapping("/client/{client_id}/patient/{patient_id}/status/discharge")
-    public ResponseEntity<Patient> dischargePatient(@PathVariable(value = "client_id") UUID client_id, @PathVariable(value = "patient_id") UUID patient_id) throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException {
+    @PutMapping("/client/{client_id}/patient/{patient_id}/discharge")
+    public ResponseEntity<Patient> dischargePatient(@PathVariable(value = "client_id") UUID client_id, @PathVariable(value = "patient_id") UUID patient_id) throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException, PatientDoesNotBelongToSpecifiedClientException {
 
-        Patient dischargedPatient = patientService.dischargePatient(patient_id.toString());
+        Patient dischargedPatient = patientService.dischargePatient(patient_id.toString(), client_id.toString());
         bedService.updateBedStatusWhenPatientDischarged(dischargedPatient.getBed_id());
         return new ResponseEntity<Patient>(dischargedPatient, HttpStatus.OK);
     }
