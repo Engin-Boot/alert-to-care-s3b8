@@ -22,7 +22,7 @@ public class PatientService {
     }
 
 
-    public Patient savePatient(Patient patient) throws PatientAlreadyExistsException, InvalidDateFormatException {
+    public Patient savePatient(Patient patient) throws PatientAlreadyExistsException{
         String patient_id = UUID.randomUUID().toString();
         patient.setPatient_id(patient_id);
         if(patientRepository.findById(patient_id).isPresent()) {
@@ -46,7 +46,7 @@ public class PatientService {
     }
 
 
-    public Patient getPatient(String patient_id) throws PatientDoesNotExistException {
+    private Patient getPatient(String patient_id) throws PatientDoesNotExistException {
         Optional<Patient> patient = patientRepository.findById(patient_id);
         if(patient.isPresent()){
             return patient.get();
@@ -56,7 +56,7 @@ public class PatientService {
         }
     }
 
-    public Patient dischargePatient(String patient_id) throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException {
+    public Patient dischargePatient(String patient_id) throws PatientHasAlreadyBeenDischargedException, PatientDoesNotExistException {
         Patient patientToDischarge = getPatient(patient_id);
         if(patientToDischarge.getPatientStatus().equalsIgnoreCase(PatientStatus.ADMITTED.toString())){
             patientToDischarge.setPatientStatus(PatientStatus.DISCHARGED.toString());
