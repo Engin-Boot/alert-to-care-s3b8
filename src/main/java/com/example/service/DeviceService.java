@@ -65,6 +65,23 @@ public class DeviceService {
         return deviceRepository.findByDeviceStatus(DeviceStatus.NOTINUSE.toString()).get(0);
     }
 
+    private Device getDeviceByBedId(String bed_id) throws DeviceDoesNotExistException {
+        Device device = deviceRepository.findByBedId(bed_id);
+        if(device != null){
+            return device;
+        }
+        else{
+            throw new DeviceDoesNotExistException("Device does not exist with bedId = "+bed_id);
+        }
+    }
+
+    public Device updateDeviceAfterPatientDischarge(String bed_id) throws DeviceDoesNotExistException {
+        Device deviceToUpdate = getDeviceByBedId(bed_id);
+        deviceToUpdate.setBedId(null);
+        deviceToUpdate.setDeviceStatus(DeviceStatus.NOTINUSE.toString());
+        return deviceRepository.save(deviceToUpdate);
+    }
+
 
     
 

@@ -60,10 +60,11 @@ public class OccupancyController {
     }
 
     @PutMapping("/client/{client_id}/patient/{patient_id}/discharge")
-    public ResponseEntity<Patient> dischargePatient(@PathVariable(value = "client_id") UUID client_id, @PathVariable(value = "patient_id") UUID patient_id) throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException, PatientDoesNotBelongToSpecifiedClientException {
+    public ResponseEntity<Patient> dischargePatient(@PathVariable(value = "client_id") UUID client_id, @PathVariable(value = "patient_id") UUID patient_id) throws PatientDoesNotExistException, PatientHasAlreadyBeenDischargedException, PatientDoesNotBelongToSpecifiedClientException, DeviceDoesNotExistException {
 
         Patient dischargedPatient = patientService.dischargePatient(patient_id.toString(), client_id.toString());
         bedService.updateBedStatusWhenPatientDischarged(dischargedPatient.getBedId());
+        deviceService.updateDeviceAfterPatientDischarge(dischargedPatient.getBedId());
         return new ResponseEntity<Patient>(dischargedPatient, HttpStatus.OK);
     }
 

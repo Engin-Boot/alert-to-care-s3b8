@@ -46,6 +46,8 @@ public class ConfigurationController {
         System.out.println("Updating client");
         bedService.createBeds(no_of_beds_to_add, client_id.toString());
         System.out.println("saving beds");
+        deviceService.createDevices(no_of_beds_to_add);
+        System.out.println("saving devices");
         return new ResponseEntity<Client>(savedClient, HttpStatus.OK);
     }
 }

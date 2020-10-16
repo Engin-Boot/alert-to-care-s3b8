@@ -14,4 +14,6 @@ public interface DeviceRepository extends JpaRepository<Device, String> {
 
     public List<Device> findByDeviceStatus(String device_status);
 
+    public Device findByBedId(String bed_id);
+
 }
