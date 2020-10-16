@@ -31,6 +31,7 @@ public class BedService {
             String bed_id = UUID.randomUUID().toString();
             BedDTO bedDTO = new BedDTO(client_id, BedStatus.VACANT.toString());
             Bed bed = bedMapper.mapBedDTOtoBedEntity(bedDTO);
+            bed.setBed_id(bed_id);
             bedRepository.save(bed);
         }
     }

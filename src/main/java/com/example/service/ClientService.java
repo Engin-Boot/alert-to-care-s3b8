@@ -34,7 +34,8 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
-    public Client updateClient(Client client, String client_id){
+    public Client updateClient(ClientDTO clientDTO, String client_id){
+        Client client = clientMapper.mapClientDTOtoClientEntity(clientDTO);
         client.setClient_id(client_id);
 
         if(clientRepository.findById(client_id).isPresent()) {

@@ -1,8 +1,10 @@
 package com.example.service;
 
+import com.example.dto.PatientDTO;
 import com.example.entities.Patient;
 import com.example.entities.PatientStatus;
 import com.example.exceptions.*;
+import com.example.mapper.PatientMapper;
 import com.example.repository.PatientRepository;
 import com.example.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +18,19 @@ public class PatientService {
 
     PatientRepository patientRepository;
 
+    PatientMapper patientMapper;
+
     @Autowired
-    public PatientService(PatientRepository patientRepository){
+    public PatientService(PatientRepository patientRepository, PatientMapper patientMapper){
         this.patientRepository = patientRepository;
+        this.patientMapper = patientMapper;
     }
 
 
-    public Patient savePatient(Patient patient) throws PatientAlreadyExistsException{
+    public Patient savePatient(PatientDTO patientDTO) throws PatientAlreadyExistsException{
         String patient_id = UUID.randomUUID().toString();
+        Patient patient = patientMapper.mapPatientDTOtoPatientEntity(patientDTO);
+        patient.setPatientStatus(PatientStatus.ADMITTED.toString());
         patient.setPatient_id(patient_id);
         if(patientRepository.findById(patient_id).isPresent()) {
             throw new PatientAlreadyExistsException("Patient with id = "+patient_id + " already exists");
@@ -31,14 +38,15 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
-    public boolean validatePatientDetails(Patient patient) throws InvalidDateFormatException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
-        if(Utility.checkIfDateIsValid(patient.getDob())){
-            if(patient.getPatientStatus().equalsIgnoreCase("ADMITTED")){
-                return true;
-            }
-            else{
-                throw new PatientCreatedWithIncorrectStatusWhenAdmittedException("Patient created with incorrect status. Status should be 'ADMITTED'.");
-            }
+    public boolean validatePatientDetails(PatientDTO patientDTO) throws InvalidDateFormatException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
+        if(Utility.checkIfDateIsValid(patientDTO.getDob())){
+            return true;
+//            if(patientDTO.getPatientStatus().equalsIgnoreCase("ADMITTED")){
+//                return true;
+//            }
+//            else{
+//                throw new PatientCreatedWithIncorrectStatusWhenAdmittedException("Patient created with incorrect status. Status should be 'ADMITTED'.");
+//            }
         }
         else{
             throw new InvalidDateFormatException("DOB is not present in the yyyy-MM-dd format");

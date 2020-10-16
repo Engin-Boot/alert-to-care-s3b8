@@ -34,9 +34,9 @@ public class ConfigurationController {
     }
 
     @PutMapping("/client/{client_id}/config")
-    public ResponseEntity<Client> updateClient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody Client client) {
-        int no_of_beds_to_add = client.getNo_of_beds();
-        Client savedClient = clientService.updateClient(client, client_id.toString());
+    public ResponseEntity<Client> updateClient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody ClientDTO clientDTO) {
+        int no_of_beds_to_add = clientDTO.getNo_of_beds();
+        Client savedClient = clientService.updateClient(clientDTO, client_id.toString());
         System.out.println("Updating client");
         bedService.createBeds(no_of_beds_to_add, client_id.toString());
         System.out.println("saving beds");
