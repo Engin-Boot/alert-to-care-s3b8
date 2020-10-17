@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface AlertRepository extends JpaRepository<Alert, String> {
 
+    List<Alert> findByPatientId(String patient_id);
 
 }

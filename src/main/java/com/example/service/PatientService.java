@@ -55,7 +55,7 @@ public class PatientService {
     }
 
 
-    private Patient getPatient(String patient_id) throws PatientDoesNotExistException {
+    public Patient getPatient(String patient_id) throws PatientDoesNotExistException {
         Optional<Patient> patient = patientRepository.findById(patient_id);
         if(patient.isPresent()){
             return patient.get();

@@ -15,6 +15,7 @@ public class PatientMapper {
         if(patientDTO.getPatientStatus()!=null){
             patient.setPatientStatus(patientDTO.getPatientStatus());
         }
+        patient.setIsAlarmActive(patientDTO.getIsAlarmActive());
 
         return patient;
     }

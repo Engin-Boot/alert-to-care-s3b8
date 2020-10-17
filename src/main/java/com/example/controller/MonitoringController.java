@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,7 +30,7 @@ public class MonitoringController {
     @Autowired
     private AlertService alertService;
 
-    @PostMapping("/device/{device_id}")
+    @PostMapping("/device/{device_id}/alert")
     public ResponseEntity<Alert> createAlert(@PathVariable(value = "device_id") UUID device_id, @Valid @RequestBody VitalsDTO vitalsDTO) throws DeviceDoesNotExistException, BedDoesNotExistException, PatientDoesNotExistException, DeviceNotAssociatedWithBedException {
         //GET DEVICE FROM ID FIRST. FROM DEVICE EXTRACT BED_ID. THEN GET BED FROM THE BED-ID.GET CLIENT_ID FROM THE BED. THEN GET PATIENT USING BED_ID
         Device device = deviceService.getDevice(device_id.toString());
@@ -48,6 +49,19 @@ public class MonitoringController {
 
         return new ResponseEntity<Alert>(savedAlert, HttpStatus.CREATED);
     }
+
+    @GetMapping("/patient/{patient_id}/alert")
+    public ResponseEntity<List<Alert>> getAlerts(@PathVariable(value = "patient_id") UUID patient_id) throws PatientDoesNotExistException {
+        Patient patient = patientService.getPatient(patient_id.toString());
+
+        if(patient.getIsAlarmActive()) {
+            List<Alert> alerts = alertService.getAllAlertsByPatientId(patient_id.toString());
+            return new ResponseEntity<List<Alert>>(alerts, HttpStatus.OK);
+        }
+        return 
+    }
+
+
 
 //    @PutMapping("/client/{client_id}/config")
 //    public ResponseEntity<Client> updateClient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody ClientDTO clientDTO) {

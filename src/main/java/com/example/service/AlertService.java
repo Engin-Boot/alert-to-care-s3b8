@@ -4,14 +4,8 @@ import com.example.dto.AlertDTO;
 import com.example.dto.BedDTO;
 import com.example.dto.ClientDTO;
 import com.example.dto.VitalsDTO;
-import com.example.entities.Alert;
-import com.example.entities.Bed;
-import com.example.entities.BedStatus;
-import com.example.entities.Client;
-import com.example.exceptions.BedDoesNotBelongToSpecifiedClientException;
-import com.example.exceptions.BedDoesNotExistException;
-import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
-import com.example.exceptions.ClientAlreadyExistsException;
+import com.example.entities.*;
+import com.example.exceptions.*;
 import com.example.mapper.AlertMapper;
 import com.example.mapper.BedMapper;
 import com.example.repository.AlertRepository;
@@ -49,9 +43,10 @@ public class AlertService {
         return null;
     }
 
-
-
-
+    public List<Alert> getAllAlertsByPatientId(String patient_id){
+        List<Alert> alerts = alertRepository.findByPatientId(patient_id);
+        return  alerts;
+    }
 
     public String checkVitalsAreOk(VitalsDTO vitalsDTO){
         String message = "";
