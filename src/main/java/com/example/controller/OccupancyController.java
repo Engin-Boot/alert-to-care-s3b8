@@ -35,7 +35,7 @@ public class OccupancyController {
 
     @PostMapping("/client/{client_id}/patient")
     public ResponseEntity<Patient> createPatient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody PatientDTO patientDTO) throws PatientAlreadyExistsException, InvalidDateFormatException, BedDoesNotExistException, BedHasAlreadyBeenOccupiedException, PatientCreatedWithIncorrectStatusWhenAdmittedException, BedDoesNotBelongToSpecifiedClientException {
-       //First we are validating patient for DOB and status as ADMITTED. Then we are checking if bed is VACANT. ONLY THEN we are inserting patient
+       //First we are validating patient for DOB and status as ADMITTED. Then we are checking if bed is VACANT. ONLY THEN we are inserting patient. Once inserting patient we are associating random NOTINUSE Device With bed that patient is associated with
 
         patientService.validatePatientDetails(patientDTO);
         bedService.updateBedStatusWhenPatientAdmitted(patientDTO.getBed_id(), client_id.toString());

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DeviceMapper {
-	public static Device mapDeviceDTOtoDeviceEntity(DeviceDTO deviceDTO) {
+	public Device mapDeviceDTOtoDeviceEntity(DeviceDTO deviceDTO) {
 		Device device = new Device();
 		device.setBedId(deviceDTO.getBedId());
 		device.setDeviceId(deviceDTO.getDeviceId());

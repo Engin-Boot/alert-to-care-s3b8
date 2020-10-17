@@ -26,7 +26,7 @@ public class DeviceService {
         this.deviceMapper = deviceMapper;
     }
 
-    public Device getDevice(String device_id) throws DeviceDoesNotExistException, DeviceNotAssociatedWithBedException {
+    public Device getDeviceHavingAssocationWithBed(String device_id) throws DeviceDoesNotExistException, DeviceNotAssociatedWithBedException {
         Optional<Device> device = deviceRepository.findById(device_id);
         if(device.isPresent()){
             if(device.get().getBedId() != null){
@@ -58,7 +58,7 @@ public class DeviceService {
         return deviceRepository.save(deviceNotInUse);
     }
 
-    public Device getDeviceWhichIsNotInUse(){
+    private Device getDeviceWhichIsNotInUse(){
         return deviceRepository.findByDeviceStatus(DeviceStatus.NOTINUSE.toString()).get(0);
     }
 
