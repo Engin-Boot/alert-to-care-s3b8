@@ -1,9 +1,13 @@
 package com.example.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
 import java.util.Map;
 
+@Data
 public class VitalsDTO {
-	
+
 	private Map<String,Integer> measurement;
 
 	public VitalsDTO(Map<String, Integer> measurement) {

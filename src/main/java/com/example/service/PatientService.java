@@ -48,12 +48,6 @@ public class PatientService {
     public boolean validatePatientDetails(PatientDTO patientDTO) throws InvalidDateFormatException, PatientCreatedWithIncorrectStatusWhenAdmittedException {
         if(Utility.checkIfDateIsValid(patientDTO.getDob())){
             return true;
-//            if(patientDTO.getPatientStatus().equalsIgnoreCase("ADMITTED")){
-//                return true;
-//            }
-//            else{
-//                throw new PatientCreatedWithIncorrectStatusWhenAdmittedException("Patient created with incorrect status. Status should be 'ADMITTED'.");
-//            }
         }
         else{
             throw new InvalidDateFormatException("DOB is not present in the yyyy-MM-dd format");
@@ -90,6 +84,17 @@ public class PatientService {
             } else {
                 throw new PatientHasAlreadyBeenDischargedException("Patient with id = " + patient_id + " has already been discahrged");
             }
+        }
+        else{
+            throw new PatientDoesNotBelongToSpecifiedClientException("Patient with id = "+patient_id + " is not associated with clientId = "+client_id);
+        }
+    }
+
+    public Patient changeAlarmStatus(boolean isAlarmActive, String patient_id, String client_id) throws PatientDoesNotExistException, PatientDoesNotBelongToSpecifiedClientException {
+        Patient patient = getPatient(patient_id);
+        if(patient.getClientId().equals(client_id)) {
+            patient.setIsAlarmActive(isAlarmActive);
+            return patientRepository.save(patient);
         }
         else{
             throw new PatientDoesNotBelongToSpecifiedClientException("Patient with id = "+patient_id + " is not associated with clientId = "+client_id);
