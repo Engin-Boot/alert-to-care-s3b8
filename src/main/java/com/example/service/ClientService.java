@@ -38,15 +38,11 @@ public class ClientService {
         Client client = clientMapper.mapClientDTOtoClientEntity(clientDTO);
         client.setClient_id(client_id);
 
-        if(clientRepository.findById(client_id).isPresent()) {
+        if(checkIfClientExists(client_id)) {
             client.setNo_of_beds(clientRepository.findById(client_id).get().getNo_of_beds() + client.getNo_of_beds());
         }
         return clientRepository.save(client);
     }
-
-//    public boolean checkifClientContainsSpecifiedBed(String bed_id){
-//        clientRepository.f
-//    }
 
     public boolean checkIfClientExists(String client_id){
         return clientRepository.findById(client_id).isPresent();

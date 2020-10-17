@@ -37,7 +37,7 @@ public class MonitoringController {
     @Autowired
     private AlertService alertService;
 
-    @PostMapping("/device/{device_id}")
+    @PostMapping("/device/{device_id}/alert")
     public ResponseEntity<Alert> createAlert(@PathVariable(value = "device_id") UUID device_id, @RequestBody VitalsDTO measurement) throws DeviceDoesNotExistException, BedDoesNotExistException, PatientDoesNotExistException, DeviceNotAssociatedWithBedException, JsonProcessingException, PatientHasNotSubscribedException {
         //GET DEVICE FROM ID FIRST. FROM DEVICE EXTRACT BED_ID. THEN GET BED FROM THE BED-ID.GET CLIENT_ID FROM THE BED. THEN GET PATIENT USING BED_ID
         Device device = deviceService.getDevice(device_id.toString());
@@ -64,6 +64,9 @@ public class MonitoringController {
 
         if(patient.getIsAlarmActive()) {
             List<Alert> alerts = alertService.getAllAlertsByPatientId(patient_id.toString());
+            if(alerts.size() == 0){
+                return new ResponseEntity<List<Alert>>(HttpStatus.NO_CONTENT);
+            }
             return new ResponseEntity<List<Alert>>(alerts, HttpStatus.OK);
         }
         else{

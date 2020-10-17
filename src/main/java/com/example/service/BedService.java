@@ -54,7 +54,7 @@ public class BedService {
         }
     }
 
-    public Bed validateBedWhenAdmitted(Optional<Bed> bed, String client_id) throws BedHasAlreadyBeenOccupiedException, BedDoesNotBelongToSpecifiedClientException {
+    private Bed validateBedWhenAdmitted(Optional<Bed> bed, String client_id) throws BedHasAlreadyBeenOccupiedException, BedDoesNotBelongToSpecifiedClientException {
         if(bed.get().getClientId().equals(client_id)){
             if(checkIfBedVacant(bed)){
                 bed.get().setBedStatus(BedStatus.OCCUPIED.toString());
@@ -82,8 +82,8 @@ public class BedService {
         return allBedStatus;
     }
 
-    public void updateBedStatusWhenPatientDischarged(String bed_id){
-        Bed bed = bedRepository.findById(bed_id).get();
+    public void updateBedStatusAfterPatientDischarged(String bed_id) throws BedDoesNotExistException {
+        Bed bed = getBed(bed_id);
         bed.setBedStatus(BedStatus.VACANT.toString());
         bedRepository.save(bed);
     }

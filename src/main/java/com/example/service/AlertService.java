@@ -27,7 +27,7 @@ public class AlertService {
         this.alertMapper = alertMapper;
     }
 
-    public Alert saveAlert(String bed_id, String client_id, String patient_id, String device_id, VitalsDTO vitalsDTO) throws JsonProcessingException {
+    public Alert saveAlert(String bed_id, String client_id, String patient_id, String device_id, VitalsDTO vitalsDTO){
 
         String vitalsStatus = checkVitalsAreOk(vitalsDTO.getMeasurements());
         if(!vitalsStatus.equals("")) {
@@ -46,13 +46,14 @@ public class AlertService {
         return  alerts;
     }
 
-    public String checkVitalsAreOk(Map<String, Integer> measurement) throws JsonProcessingException{
+    private String checkVitalsAreOk(Map<String, Integer> measurement){
         String message = "";
         if(measurement.isEmpty()) {
         	return "Device is malfunctioning";
         }
         message = VitalResolver.vitalResolver(measurement);
         System.out.println(message);
+        //System.out.println("GGGG");
         return message;
     }
 }
