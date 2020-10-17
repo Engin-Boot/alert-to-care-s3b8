@@ -8,6 +8,8 @@ import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
 import com.example.mapper.AlertMapper;
 import com.example.repository.AlertRepository;
 import com.example.repository.BedRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,8 +43,8 @@ public class AlertServiceTest {
     }
 
     @Test
-    public void given_Beds_When_Created_Then_Throw_No_Exception() {
-        VitalsDTO vitalsDTO = new VitalsDTO(20, 50,100);
+    public void given_Beds_When_Created_Then_Throw_No_Exception() throws JsonProcessingException {
+        VitalsDTO vitalsDTO = new VitalsDTO("");
         System.out.println(alertService.checkVitalsAreOk(vitalsDTO));
     }
 }
