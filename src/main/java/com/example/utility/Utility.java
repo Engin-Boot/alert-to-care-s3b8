@@ -1,10 +1,10 @@
 package com.example.utility;
 
-import java.util.ResourceBundle;
-
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+
+import java.util.ResourceBundle;
 
 
 public class Utility {

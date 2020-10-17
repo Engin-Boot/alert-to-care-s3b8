@@ -1,11 +1,10 @@
 package com.example.repository;
 
-import java.util.List;
-
+import com.example.entities.Bed;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.example.entities.Bed;
+import java.util.List;
 
 @Repository
 public interface BedRepository extends JpaRepository<Bed, String> {

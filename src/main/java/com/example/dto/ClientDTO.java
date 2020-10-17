@@ -1,11 +1,11 @@
 package com.example.dto;
 
+import com.example.customannotations.Enum;
+import com.example.entities.BedLayout;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.example.customannotations.Enum;
-import com.example.entities.BedLayout;
 
 public class ClientDTO {
 	@NotNull(message = "Client_Type should not be null")

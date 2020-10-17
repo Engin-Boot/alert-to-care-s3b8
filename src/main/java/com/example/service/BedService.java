@@ -1,14 +1,5 @@
 package com.example.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.dto.BedDTO;
 import com.example.entities.Bed;
 import com.example.entities.BedStatus;
@@ -17,6 +8,10 @@ import com.example.exceptions.BedDoesNotExistException;
 import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
 import com.example.mapper.BedMapper;
 import com.example.repository.BedRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 
 @Service

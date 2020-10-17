@@ -1,16 +1,15 @@
 package com.example.web;
 
-import java.time.LocalDateTime;
-
+import com.example.entities.ErrorMessage;
 import com.example.exceptions.*;
+import com.example.utility.Utility;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.example.entities.ErrorMessage;
-import com.example.utility.Utility;
+import java.time.LocalDateTime;
 
 @RestControllerAdvice
 public class ConfigurationRestAdvice {

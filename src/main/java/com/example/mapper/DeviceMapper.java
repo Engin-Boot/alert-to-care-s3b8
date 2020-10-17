@@ -1,9 +1,8 @@
 package com.example.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.example.dto.DeviceDTO;
 import com.example.entities.Device;
+import org.springframework.stereotype.Component;
 
 @Component
 public class DeviceMapper {

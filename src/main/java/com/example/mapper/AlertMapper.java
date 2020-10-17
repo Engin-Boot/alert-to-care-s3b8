@@ -1,9 +1,8 @@
 package com.example.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.example.dto.AlertDTO;
 import com.example.entities.Alert;
+import org.springframework.stereotype.Component;
 
 @Component
 public class AlertMapper {

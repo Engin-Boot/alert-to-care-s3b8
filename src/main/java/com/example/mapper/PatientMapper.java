@@ -1,9 +1,8 @@
 package com.example.mapper;
 
-import org.springframework.stereotype.Component;
-
 import com.example.dto.PatientDTO;
 import com.example.entities.Patient;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PatientMapper {
