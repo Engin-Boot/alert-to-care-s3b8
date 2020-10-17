@@ -1,10 +1,10 @@
 package com.example.dto;
 
-import com.example.customannotations.Enum;
-import com.example.entities.PatientStatus;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.example.customannotations.Enum;
+import com.example.entities.PatientStatus;
 
 public class PatientDTO {
 

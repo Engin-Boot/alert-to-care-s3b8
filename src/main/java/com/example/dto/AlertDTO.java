@@ -1,7 +1,5 @@
 package com.example.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 

@@ -1,8 +1,9 @@
 package com.example.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.example.dto.ClientDTO;
 import com.example.entities.Client;
-import org.springframework.stereotype.Component;
 
 @Component
 public class ClientMapper {

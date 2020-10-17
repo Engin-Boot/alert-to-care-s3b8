@@ -1,10 +1,9 @@
 package com.example.mapper;
 
-import com.example.dto.BedDTO;
-import com.example.dto.ClientDTO;
-import com.example.entities.Bed;
-import com.example.entities.Client;
 import org.springframework.stereotype.Component;
+
+import com.example.dto.BedDTO;
+import com.example.entities.Bed;
 
 @Component
 public class BedMapper {

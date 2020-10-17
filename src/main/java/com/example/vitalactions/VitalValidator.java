@@ -4,7 +4,7 @@ import com.example.utility.Utility;
 
 public class VitalValidator {
 	
-	public static String CheckIfVitalIsOK(String vital, String value) {
+	public static String CheckIfVitalIsOK(String vital, Integer value) {
 		System.out.println(vital.toLowerCase());
 		String limits = Utility.getVitalLimit(vital.toLowerCase());
 		System.out.println(limits);
@@ -14,10 +14,10 @@ public class VitalValidator {
 		Integer upperlimit = Integer.parseInt(vitallimits[1].trim());
 		System.out.println(upperlimit);
 		
-		if(Integer.parseInt(value) < lowerlimit) {
+		if((value) < lowerlimit) {
 			return vital + " is low ";
 		}
-		else if(Integer.parseInt(value) > upperlimit){
+		else if((value) > upperlimit){
 			return vital + " is high ";
 		}
 		return "";	

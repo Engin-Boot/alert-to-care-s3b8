@@ -1,11 +1,9 @@
 package com.example.dto;
 
+import javax.validation.constraints.NotNull;
+
 import com.example.customannotations.Enum;
 import com.example.entities.BedStatus;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 public class BedDTO {
 

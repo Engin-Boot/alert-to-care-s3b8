@@ -2,9 +2,6 @@ package com.example.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-
-import com.example.customannotations.Enum;
 
 @Entity
 public class Device {

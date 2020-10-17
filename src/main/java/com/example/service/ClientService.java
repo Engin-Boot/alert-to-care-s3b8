@@ -1,14 +1,15 @@
 package com.example.service;
 
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.dto.ClientDTO;
 import com.example.entities.Client;
 import com.example.exceptions.ClientAlreadyExistsException;
 import com.example.mapper.ClientMapper;
 import com.example.repository.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 public class ClientService {

@@ -1,10 +1,7 @@
 package com.example.entities;
 
-import com.example.customannotations.Enum;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 
 @Entity

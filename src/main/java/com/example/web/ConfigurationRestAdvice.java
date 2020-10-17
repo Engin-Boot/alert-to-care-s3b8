@@ -1,15 +1,28 @@
 package com.example.web;
 
-import com.example.entities.ErrorMessage;
-import com.example.exceptions.*;
-import com.example.utility.Utility;
+import java.time.LocalDateTime;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
+import com.example.entities.ErrorMessage;
+import com.example.exceptions.BedDoesNotBelongToSpecifiedClientException;
+import com.example.exceptions.BedDoesNotExistException;
+import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
+import com.example.exceptions.ClientAlreadyExistsException;
+import com.example.exceptions.ClientDoesNotExistException;
+import com.example.exceptions.DeviceDoesNotExistException;
+import com.example.exceptions.DeviceNotAssociatedWithBedException;
+import com.example.exceptions.InvalidDateFormatException;
+import com.example.exceptions.PatientAlreadyExistsException;
+import com.example.exceptions.PatientCreatedWithIncorrectStatusWhenAdmittedException;
+import com.example.exceptions.PatientDoesNotBelongToSpecifiedClientException;
+import com.example.exceptions.PatientDoesNotExistException;
+import com.example.exceptions.PatientHasAlreadyBeenDischargedException;
+import com.example.utility.Utility;
 
 @RestControllerAdvice
 public class ConfigurationRestAdvice {

@@ -10,6 +10,7 @@ import com.example.repository.AlertRepository;
 import com.example.repository.BedRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,8 +45,8 @@ public class AlertServiceTest {
 
     @Test
     public void given_Beds_When_Created_Then_Throw_No_Exception() throws JsonProcessingException {
-        VitalsDTO vitalsDTO = new VitalsDTO("");
-        System.out.println(alertService.checkVitalsAreOk(vitalsDTO));
+    	Map<String, Integer> map = new HashMap<>();
+        System.out.println(alertService.checkVitalsAreOk(map));
     }
 }
 
