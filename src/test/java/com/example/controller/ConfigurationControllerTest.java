@@ -1,24 +1,29 @@
 package com.example.controller;
 
 import com.example.dto.ClientDTO;
+import com.example.entities.Client;
 import com.example.service.ClientService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class ConfigurationControllerTest {
 
     @Autowired
@@ -66,17 +71,48 @@ public class ConfigurationControllerTest {
     }
 
     @Test
-    void given_ClientDTO_When_Call_Create_Client_Api_Then_Return_xx_Status() throws Exception {
-        ClientDTO clientDTO = new ClientDTO("typ1", "DEFAULT", 3);
+    void given_ClientDTO_With_Zero_Beds_When_Call_Create_Client_Api_Then_Return_400_Status() throws Exception {
+        ClientDTO clientDTO = new ClientDTO("typ1", "DEFAULT", 0);
 
         mockMvc.perform(post("/pms/client/config")
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(clientDTO)))
-                .andExpect(status().is(201))
+                .andExpect(status().is(400))
+                .andExpect(jsonPath("$.code", Matchers.is("400 BAD_REQUEST")))
+                .andExpect(jsonPath("$.message", Matchers.is("Validation failed for request body: Min no of beds should be greater or equal to 1, ")));
+
+    }
+
+    @Test
+    void given_New_ClientDTO_When_Call_Update_Client_Api_Then_Client_Created_With_Return_200_Status() throws Exception {
+        ClientDTO clientDTO = new ClientDTO("typ1", "DEFAULT", 3);
+
+        String client_id = UUID.randomUUID().toString();
+
+        mockMvc.perform(put("/pms/client/{client_id}/config", client_id)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(clientDTO)))
+                .andExpect(status().is(200))
                 .andExpect(jsonPath("$.client_type", Matchers.is("typ1")))
                 .andExpect(jsonPath("$.layout", Matchers.is("DEFAULT")))
                 .andExpect(jsonPath("$.no_of_beds", Matchers.is(3)));
     }
-    
 
+    @Test
+    void given_ClientDTO_With_Existing_Id_When_Call_Update_Client_Api_Then_Client_Updated_With_Return_200_Status() throws Exception {
+        ClientDTO existingClientDTO = new ClientDTO("typ1", "DEFAULT", 3);
+        Client existingClient = clientService.saveClient(existingClientDTO);
+        int no_of_beds_to_add = 5;
+        ClientDTO clientDTO = new ClientDTO("typ2", "L_LAYOUT", no_of_beds_to_add);
+
+        String client_id = UUID.randomUUID().toString();
+
+        mockMvc.perform(put("/pms/client/{client_id}/config", existingClient.getClient_id())
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(clientDTO)))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$.client_type", Matchers.is("typ2")))
+                .andExpect(jsonPath("$.layout", Matchers.is("L_LAYOUT")))
+                .andExpect(jsonPath("$.no_of_beds", Matchers.is(3 + no_of_beds_to_add)));
+    }
 }

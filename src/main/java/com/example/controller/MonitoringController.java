@@ -38,13 +38,13 @@ public class MonitoringController {
     private AlertService alertService;
 
     @PostMapping("/device/{device_id}/alert")
-    public ResponseEntity<Alert> createAlert(@PathVariable(value = "device_id") UUID device_id, @RequestBody VitalsDTO measurement) throws DeviceDoesNotExistException, BedDoesNotExistException, PatientDoesNotExistException, DeviceNotAssociatedWithBedException, JsonProcessingException, PatientHasNotSubscribedException {
+    public ResponseEntity<Alert> createAlert(@PathVariable(value = "device_id") UUID device_id, @RequestBody VitalsDTO measurement) throws DeviceDoesNotExistException, BedDoesNotExistException, PatientDoesNotExistException, DeviceNotAssociatedWithBedException {
         //GET DEVICE FROM ID FIRST. FROM DEVICE EXTRACT BED_ID. THEN GET BED FROM THE BED-ID.GET CLIENT_ID FROM THE BED. THEN GET PATIENT USING BED_ID
         Device device = deviceService.getDeviceHavingAssocationWithBed(device_id.toString());
         String bed_id = device.getBedId();
 
         Bed bed = bedService.getBed(bed_id);
-        String client_id = bed.getBed_id();
+        String client_id = bed.getClientId();
 
         Patient patient = patientService.getPatientByBedId(bed_id);
         String patient_id = patient.getPatient_id();
