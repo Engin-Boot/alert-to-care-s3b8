@@ -1,10 +1,12 @@
 package com.example.service;
 
-import com.example.dto.ClientDTO;
-import com.example.entities.Client;
-import com.example.exceptions.ClientAlreadyExistsException;
-import com.example.mapper.ClientMapper;
-import com.example.repository.ClientRepository;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,12 +16,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.example.dto.ClientDTO;
+import com.example.entities.Client;
+import com.example.exceptions.ClientAlreadyExistsException;
+import com.example.mapper.ClientMapper;
+import com.example.repository.ClientRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClientServiceTest {

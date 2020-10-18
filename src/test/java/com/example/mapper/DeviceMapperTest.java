@@ -6,11 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.example.dto.AlertDTO;
 import com.example.dto.DeviceDTO;
-import com.example.entities.Alert;
 import com.example.entities.Device;
-import com.example.service.AlertService;
 
 public class DeviceMapperTest {
 	

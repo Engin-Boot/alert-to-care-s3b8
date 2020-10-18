@@ -16,14 +16,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultActions;
 
 import com.example.dto.ClientDTO;
 import com.example.dto.PatientDTO;
 import com.example.entities.Bed;
 import com.example.repository.BedRepository;
-import com.example.service.ClientService;
 import com.example.service.PatientService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

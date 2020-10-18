@@ -1,16 +1,11 @@
 package com.example.mapper;
 
-import java.util.UUID;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.example.dto.AlertDTO;
 import com.example.dto.ClientDTO;
-import com.example.entities.Alert;
 import com.example.entities.Client;
-import com.example.service.AlertService;
 
 public class ClientMapperTest {
 	

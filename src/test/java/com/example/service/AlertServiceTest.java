@@ -1,18 +1,16 @@
 package com.example.service;
 
-import com.example.dto.AlertDTO;
-import com.example.dto.PatientDTO;
-import com.example.dto.VitalsDTO;
-import com.example.entities.*;
-import com.example.exceptions.BedDoesNotExistException;
-import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
-import com.example.exceptions.PatientAlreadyExistsException;
-import com.example.mapper.AlertMapper;
-import com.example.repository.AlertRepository;
-import com.example.repository.BedRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import org.apache.commons.collections.map.HashedMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,10 +20,11 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.*;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import com.example.dto.AlertDTO;
+import com.example.dto.VitalsDTO;
+import com.example.entities.Alert;
+import com.example.mapper.AlertMapper;
+import com.example.repository.AlertRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AlertServiceTest {

@@ -1,18 +1,15 @@
 package com.example.controller;
 
-import com.example.dto.ClientDTO;
-import com.example.dto.DeviceDTO;
-import com.example.dto.PatientDTO;
-import com.example.dto.VitalsDTO;
-import com.example.entities.*;
-import com.example.repository.AlertRepository;
-import com.example.repository.BedRepository;
-import com.example.repository.DeviceRepository;
-import com.example.repository.PatientRepository;
-import com.example.service.ClientService;
-import com.example.service.DeviceService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +19,20 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.example.dto.ClientDTO;
+import com.example.dto.PatientDTO;
+import com.example.dto.VitalsDTO;
+import com.example.entities.Alert;
+import com.example.entities.Device;
+import com.example.entities.DeviceStatus;
+import com.example.entities.Patient;
+import com.example.entities.PatientStatus;
+import com.example.repository.AlertRepository;
+import com.example.repository.BedRepository;
+import com.example.repository.DeviceRepository;
+import com.example.repository.PatientRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc

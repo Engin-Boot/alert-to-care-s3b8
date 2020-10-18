@@ -1,5 +1,11 @@
 package com.example.service;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.dto.DeviceDTO;
 import com.example.entities.Device;
 import com.example.entities.DeviceStatus;
@@ -7,11 +13,6 @@ import com.example.exceptions.DeviceDoesNotExistException;
 import com.example.exceptions.DeviceNotAssociatedWithBedException;
 import com.example.mapper.DeviceMapper;
 import com.example.repository.DeviceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.UUID;
 
 
 @Service

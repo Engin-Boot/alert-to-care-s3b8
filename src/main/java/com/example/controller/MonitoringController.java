@@ -1,25 +1,37 @@
 package com.example.controller;
 
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.dto.VitalsDTO;
 import com.example.entities.Alert;
 import com.example.entities.Bed;
 import com.example.entities.Device;
 import com.example.entities.Patient;
-import com.example.exceptions.*;
+import com.example.exceptions.BedDoesNotExistException;
+import com.example.exceptions.DeviceDoesNotExistException;
+import com.example.exceptions.DeviceNotAssociatedWithBedException;
+import com.example.exceptions.PatientDoesNotBelongToSpecifiedClientException;
+import com.example.exceptions.PatientDoesNotExistException;
+import com.example.exceptions.PatientHasNotSubscribedException;
 import com.example.service.AlertService;
 import com.example.service.BedService;
 import com.example.service.DeviceService;
 import com.example.service.PatientService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/pms")

@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class VitalResolver {
 	
-	public static String vitalResolver(Map<String, Integer> measurement){
+	public static String vitalValidatorCaller(Map<String, Integer> measurement){
 		String message = "";
 		System.out.println(measurement);
 		Iterator<Map.Entry<String, Integer>> itr = measurement.entrySet().iterator();

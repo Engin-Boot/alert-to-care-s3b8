@@ -6,11 +6,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.example.dto.AlertDTO;
 import com.example.dto.PatientDTO;
-import com.example.entities.Alert;
 import com.example.entities.Patient;
-import com.example.service.AlertService;
 
 public class PatientMapperTest {
 	

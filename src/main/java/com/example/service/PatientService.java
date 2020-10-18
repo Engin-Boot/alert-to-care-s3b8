@@ -1,17 +1,23 @@
 package com.example.service;
 
-import com.example.dto.PatientDTO;
-import com.example.entities.Patient;
-import com.example.entities.PatientStatus;
-import com.example.exceptions.*;
-import com.example.mapper.PatientMapper;
-import com.example.repository.PatientRepository;
-import com.example.utility.Utility;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
+import com.example.dto.PatientDTO;
+import com.example.entities.Patient;
+import com.example.entities.PatientStatus;
+import com.example.exceptions.InvalidDateFormatException;
+import com.example.exceptions.PatientAlreadyExistsException;
+import com.example.exceptions.PatientCreatedWithIncorrectStatusWhenAdmittedException;
+import com.example.exceptions.PatientDoesNotBelongToSpecifiedClientException;
+import com.example.exceptions.PatientDoesNotExistException;
+import com.example.exceptions.PatientHasAlreadyBeenDischargedException;
+import com.example.mapper.PatientMapper;
+import com.example.repository.PatientRepository;
+import com.example.utility.Utility;
 
 @Service
 public class PatientService {

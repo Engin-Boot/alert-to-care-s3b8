@@ -1,18 +1,18 @@
 package com.example.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.dto.AlertDTO;
 import com.example.dto.VitalsDTO;
 import com.example.entities.Alert;
 import com.example.mapper.AlertMapper;
 import com.example.repository.AlertRepository;
 import com.example.vitalactions.VitalResolver;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 
 @Service
@@ -51,7 +51,7 @@ public class AlertService {
         if(measurement.isEmpty()) {
         	return "Device is malfunctioning";
         }
-        message = VitalResolver.vitalResolver(measurement);
+        message = VitalResolver.vitalValidatorCaller(measurement);
         System.out.println(message);
         //System.out.println("GGGG");
         return message;

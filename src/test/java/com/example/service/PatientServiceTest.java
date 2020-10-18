@@ -1,13 +1,12 @@
 package com.example.service;
 
-import com.example.dto.PatientDTO;
-import com.example.entities.Client;
-import com.example.entities.Patient;
-import com.example.entities.PatientStatus;
-import com.example.exceptions.*;
-import com.example.mapper.PatientMapper;
-import com.example.repository.ClientRepository;
-import com.example.repository.PatientRepository;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,12 +16,17 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.example.dto.PatientDTO;
+import com.example.entities.Patient;
+import com.example.entities.PatientStatus;
+import com.example.exceptions.InvalidDateFormatException;
+import com.example.exceptions.PatientAlreadyExistsException;
+import com.example.exceptions.PatientCreatedWithIncorrectStatusWhenAdmittedException;
+import com.example.exceptions.PatientDoesNotBelongToSpecifiedClientException;
+import com.example.exceptions.PatientDoesNotExistException;
+import com.example.exceptions.PatientHasAlreadyBeenDischargedException;
+import com.example.mapper.PatientMapper;
+import com.example.repository.PatientRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PatientServiceTest {

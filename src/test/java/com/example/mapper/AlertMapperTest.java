@@ -8,7 +8,6 @@ import org.junit.Test;
 
 import com.example.dto.AlertDTO;
 import com.example.entities.Alert;
-import com.example.service.AlertService;
 
 public class AlertMapperTest {
 	

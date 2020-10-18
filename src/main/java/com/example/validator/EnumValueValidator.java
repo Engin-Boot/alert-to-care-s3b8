@@ -1,9 +1,9 @@
 package com.example.validator;
 
-import com.example.customannotations.Enum;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
+import com.example.customannotations.Enum;
  
 public class EnumValueValidator implements ConstraintValidator<Enum, String>
 {

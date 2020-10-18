@@ -1,13 +1,15 @@
 package com.example.service;
 
-import com.example.entities.Bed;
-import com.example.entities.BedStatus;
-import com.example.entities.Device;
-import com.example.entities.DeviceStatus;
-import com.example.exceptions.DeviceDoesNotExistException;
-import com.example.exceptions.DeviceNotAssociatedWithBedException;
-import com.example.mapper.DeviceMapper;
-import com.example.repository.DeviceRepository;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,13 +19,12 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import com.example.entities.Device;
+import com.example.entities.DeviceStatus;
+import com.example.exceptions.DeviceDoesNotExistException;
+import com.example.exceptions.DeviceNotAssociatedWithBedException;
+import com.example.mapper.DeviceMapper;
+import com.example.repository.DeviceRepository;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DeviceServiceTest {
