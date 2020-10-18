@@ -76,7 +76,7 @@ public class PatientService {
                 patientToDischarge.setPatientStatus(PatientStatus.DISCHARGED.toString());
                 return patientRepository.save(patientToDischarge);
             } else {
-                throw new PatientHasAlreadyBeenDischargedException("Patient with id = " + patient_id + " has already been discahrged");
+                throw new PatientHasAlreadyBeenDischargedException("Patient with id = " + patient_id + " has already been discharged");
             }
         }
         else{

@@ -205,7 +205,7 @@ public class MonitoringControllerTest {
     }
 
     @Test
-    void given_Alarm_Status_When_Call_Change_Alarm_Status_Api_Then_Return_200_Status() throws Exception {
+    void given_Alarm_Status_With_True_And_Valid_Patient_And_Client_Ids_When_Call_Change_Alarm_Status_Api_Then_Return_200_Status() throws Exception {
 
         String patient_id = UUID.randomUUID().toString();
         String client_id = UUID.randomUUID().toString();
@@ -219,9 +219,56 @@ public class MonitoringControllerTest {
                 .contentType("application/json")
                 .content(objectMapper.writeValueAsString(alarmStatus)))
                 .andExpect(status().is(200))
-                .andExpect(jsonPath("$", Matchers.is("Alarm ")));
+                .andExpect(jsonPath("$", Matchers.is("Alarm status activated")));
     }
 
+    @Test
+    void given_Alarm_Status_With_False_And_Valid_Patient_And_Client_Ids_When_Call_Change_Alarm_Status_Api_Then_Return_200_Status() throws Exception {
 
+        String patient_id = UUID.randomUUID().toString();
+        String client_id = UUID.randomUUID().toString();
+        Patient patient = new Patient(patient_id, "name1", "1998-04-01", UUID.randomUUID().toString(), PatientStatus.ADMITTED.toString(), client_id, true);
+        patientRepository.save(patient);
 
+        Map<String, Boolean> alarmStatus = new HashMap<>();
+        alarmStatus.put("isAlarmActive", false);
+
+        mockMvc.perform(put("/pms/client/{client_id}/patient/{patient_id}/alarmStatus", client_id, patient_id)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(alarmStatus)))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$", Matchers.is("Alarm status deactivated")));
+    }
+
+    @Test
+    void given_Alarm_Status_And_Non_Existing_Patient_Id_When_Call_Change_Alarm_Status_Api_Then_Return_400_Status() throws Exception {
+        String non_existing_patient_id = UUID.randomUUID().toString();
+        String client_id = UUID.randomUUID().toString();
+
+        Map<String, Boolean> alarmStatus = new HashMap<>();
+        alarmStatus.put("isAlarmActive", true);
+
+        mockMvc.perform(put("/pms/client/{client_id}/patient/{patient_id}/alarmStatus", client_id, non_existing_patient_id)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(alarmStatus)))
+                .andExpect(jsonPath("$.code", Matchers.is("400 BAD_REQUEST")))
+                .andExpect(jsonPath("$.message", Matchers.is("Patient does not exist with id = " + non_existing_patient_id)));
+    }
+
+    @Test
+    void given_Alarm_Status_And_Client_Id_Not_Associated_With_Patient_When_Call_Change_Alarm_Status_Api_Then_Return_400_Status() throws Exception {
+        String patient_id = UUID.randomUUID().toString();
+        String not_associated_client_id = UUID.randomUUID().toString();
+        Patient patient = new Patient(patient_id, "name1", "1998-04-01", UUID.randomUUID().toString(), PatientStatus.ADMITTED.toString(), UUID.randomUUID().toString(), true);
+        patientRepository.save(patient);
+
+        Map<String, Boolean> alarmStatus = new HashMap<>();
+        alarmStatus.put("isAlarmActive", true);
+
+        mockMvc.perform(put("/pms/client/{client_id}/patient/{patient_id}/alarmStatus", not_associated_client_id, patient_id)
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(alarmStatus)))
+                .andExpect(jsonPath("$.code", Matchers.is("400 BAD_REQUEST")))
+                .andExpect(jsonPath("$.message", Matchers.is("Patient with id = " + patient_id +" is not associated with clientId = " + not_associated_client_id )));
+    }
 }

@@ -32,14 +32,13 @@ import com.jayway.jsonpath.JsonPath;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
-public class OccypancyControllerTest {
+public class OccupancyControllerTest {
 	
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ObjectMapper objectMapper;
-    
 
     @Autowired
     private PatientService patientService;
@@ -181,7 +180,7 @@ public class OccypancyControllerTest {
     }
     
     @Test
-    public void given_beds_when_discargepatient_api_is_called_then_return_status_200() throws Exception{
+    public void given_beds_when_dischargepatient_api_is_called_then_return_status_200() throws Exception{
     	ClientDTO clientDTO = new ClientDTO("typ1", "DEFAULT", 3);
     	
         MvcResult result = mockMvc.perform(post("/pms/client/config")
@@ -205,7 +204,7 @@ public class OccypancyControllerTest {
     }
     
     @Test
-    public void given_beds_when_discargepatient_api_is_called_with_wrong_patient_id_then_return_status_400_with_message() throws Exception{
+    public void given_beds_when_dischargepatient_api_is_called_with_wrong_patient_id_then_return_status_400_with_message() throws Exception{
     	ClientDTO clientDTO = new ClientDTO("typ1", "DEFAULT", 3);
     	
         MvcResult result = mockMvc.perform(post("/pms/client/config")
@@ -221,7 +220,7 @@ public class OccypancyControllerTest {
     }
     
     @Test
-    public void given_beds_when_discargepatient_api_is_called_with_wrong_client_id_then_return_status_400_with_message() throws Exception{
+    public void given_beds_when_dischargepatient_api_is_called_with_wrong_client_id_then_return_status_400_with_message() throws Exception{
     	ClientDTO clientDTO = new ClientDTO("typ1", "DEFAULT", 3);
     	
         MvcResult result = mockMvc.perform(post("/pms/client/config")
@@ -248,7 +247,7 @@ public class OccypancyControllerTest {
     }
     
     @Test
-    public void given_beds_when_discargepatient_api_is_called_for_already_discharged_patient_then_return_status_400() throws Exception{
+    public void given_beds_when_dischargepatient_api_is_called_for_already_discharged_patient_then_return_status_400() throws Exception{
     	ClientDTO clientDTO = new ClientDTO("typ1", "DEFAULT", 3);
     	
         MvcResult result = mockMvc.perform(post("/pms/client/config")
@@ -271,10 +270,6 @@ public class OccypancyControllerTest {
         mockMvc.perform(put("/pms/client/{client_id}/patient/{patient_id}/discharge",clientId, patientId)
                 .contentType("application/json"))
                 .andExpect(status().is(400))
-                .andExpect(jsonPath("$.message", Matchers.is("Patient with id = "+patientId+" has already been discahrged")));
-        
-        
+                .andExpect(jsonPath("$.message", Matchers.is("Patient with id = "+patientId+" has already been discharged")));
     }
-
-    
 }
