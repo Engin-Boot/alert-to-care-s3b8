@@ -16,7 +16,6 @@ target/
 .DS_Store
 .mvnw
 .mvnw.emd
-.jar
 
 
 ### IntelliJ IDEA ###
@@ -25,6 +24,7 @@ target/
 *.iml
 *.ipr
 *.db
+*.jar
 
 ### NetBeans ###
 /nbproject/private/
