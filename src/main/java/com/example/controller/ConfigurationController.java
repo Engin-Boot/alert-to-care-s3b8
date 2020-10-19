@@ -4,6 +4,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,8 @@ import com.example.service.DeviceService;
 @RestController
 @RequestMapping("/pms")
 public class ConfigurationController {
-
+	
+	final Logger logger = LogManager.getLogger(ConfigurationController.class);
     @Autowired
     private ClientService clientService;
 
@@ -36,13 +39,12 @@ public class ConfigurationController {
 
     @PostMapping("/client/config")
     public ResponseEntity<Client> createClient(@Valid @RequestBody ClientDTO clientDTO) throws ClientAlreadyExistsException {
-        System.out.println("CCCC");
         Client savedClient = clientService.saveClient(clientDTO);
-        System.out.println("saving client");
+        logger.info("Saving client");
         bedService.createBeds(savedClient.getNo_of_beds(), savedClient.getClient_id());
-        System.out.println("saving beds");
+        logger.info("Saving Beds");
         deviceService.createDevices(savedClient.getNo_of_beds());
-        System.out.println("saving devices");
+        logger.info("Saving Devices");
         return new ResponseEntity<Client>(savedClient, HttpStatus.CREATED);
     }
 
@@ -50,11 +52,11 @@ public class ConfigurationController {
     public ResponseEntity<Client> updateClient(@PathVariable(value = "client_id") UUID client_id, @Valid @RequestBody ClientDTO clientDTO) {
         int no_of_beds_to_add = clientDTO.getNo_of_beds();
         Client savedClient = clientService.updateClient(clientDTO, client_id.toString());
-        System.out.println("Updating client");
+        logger.info("Updating client");
         bedService.createBeds(no_of_beds_to_add, client_id.toString());
-        System.out.println("saving beds");
+        logger.info("Saving Beds");
         deviceService.createDevices(no_of_beds_to_add);
-        System.out.println("saving devices");
+        logger.info("Saving devices");
         return new ResponseEntity<Client>(savedClient, HttpStatus.OK);
     }
 }

@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,8 @@ import com.example.service.PatientService;
 @RestController
 @RequestMapping("/pms")
 public class OccupancyController {
+	
+	final Logger logger = LogManager.getLogger(OccupancyController.class);
 
     @Autowired
     private PatientService patientService;
@@ -57,9 +61,9 @@ public class OccupancyController {
 
         patientService.validatePatientDetails(patientDTO);
         bedService.updateBedStatusWhenPatientAdmitted(patientDTO.getBed_id(), client_id.toString());
-        System.out.println("Bed Status HAS been updated");
+        logger.info("Bed Status has been updated");
         Patient savedPatient = patientService.savePatient(patientDTO, client_id.toString());
-        System.out.println("saving patient");
+        logger.info("saving patient");
         deviceService.associateDeviceToBed(patientDTO.getBed_id());
         return new ResponseEntity<Patient>(savedPatient, HttpStatus.CREATED);
     }

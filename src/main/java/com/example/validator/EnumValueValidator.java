@@ -16,24 +16,19 @@ public class EnumValueValidator implements ConstraintValidator<Enum, String>
     }
     
     
-    public boolean validate(Object enumValue, Object[] enumValues, String valueForValidation, boolean result) {
-    	if(valueForValidation.equals(enumValue.toString())||refactorcheckValid(valueForValidation,enumValue,result)) {
-    		result = true;
-    	}
-		return result;
+    public boolean validate(Object enumValue, Object[] enumValues, String valueForValidation) {
+		return valueForValidation.equals(enumValue.toString())||refactorcheckValid(valueForValidation,enumValue);
     }
     
-    public boolean refactorcheckValid(String valueForValidation, Object enumValue, boolean result) {
-    	if(this.annotation.ignoreCase() && valueForValidation.equalsIgnoreCase(enumValue.toString())){
-    		result = true;
-    	}
-		return result;
+    public boolean refactorcheckValid(String valueForValidation, Object enumValue) {
+		return this.annotation.ignoreCase() && valueForValidation.equalsIgnoreCase(enumValue.toString());
     }
     
-    public boolean checkValid(Object[] enumValues, String valueForValidation, boolean result) {
+    public boolean checkValid(Object[] enumValues, String valueForValidation) {
+    	boolean result = false;
     	for(Object enumValue:enumValues)
         {
-            if(validate(enumValue,enumValues, valueForValidation, result))
+            if(validate(enumValue,enumValues, valueForValidation))
             {
                 result = true; 
                 break;
@@ -56,7 +51,7 @@ public class EnumValueValidator implements ConstraintValidator<Enum, String>
 
         if(enumValues != null)
         {
-            result = checkValid(enumValues, valueForValidation, result);
+            result = checkValid(enumValues, valueForValidation);
         }
         return result;
     }

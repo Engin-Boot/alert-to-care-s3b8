@@ -2,6 +2,8 @@ package com.example.web;
 
 import java.time.LocalDateTime;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,127 +11,25 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.entities.ErrorMessage;
-import com.example.exceptions.BedDoesNotBelongToSpecifiedClientException;
-import com.example.exceptions.BedDoesNotExistException;
-import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
-import com.example.exceptions.ClientAlreadyExistsException;
-import com.example.exceptions.ClientDoesNotExistException;
-import com.example.exceptions.DeviceDoesNotExistException;
-import com.example.exceptions.DeviceNotAssociatedWithBedException;
-import com.example.exceptions.InvalidDateFormatException;
-import com.example.exceptions.PatientAlreadyExistsException;
-import com.example.exceptions.PatientCreatedWithIncorrectStatusWhenAdmittedException;
-import com.example.exceptions.PatientDoesNotBelongToSpecifiedClientException;
-import com.example.exceptions.PatientDoesNotExistException;
-import com.example.exceptions.PatientHasAlreadyBeenDischargedException;
-import com.example.exceptions.PatientHasNotSubscribedException;
 import com.example.utility.Utility;
+import com.example.vitalactions.VitalResolver;
 
 @RestControllerAdvice
 public class ConfigurationRestAdvice {
-
-    @ExceptionHandler(ClientAlreadyExistsException.class)
+	
+	final Logger logger = LogManager.getLogger(VitalResolver.class);
+    @ExceptionHandler(Exception.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleClientAlreadyExistsFoundException(ClientAlreadyExistsException ex){
-        ex.printStackTrace();
+    public ErrorMessage handleClientAlreadyExistsFoundException(Exception ex){
+        logger.error("",ex);
         return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
     }
 
-    @ExceptionHandler(PatientAlreadyExistsException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handlePatientAlreadyExistsFoundException(PatientAlreadyExistsException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(BedDoesNotBelongToSpecifiedClientException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleBedDoesNotBelongToSpecifiedClientException(BedDoesNotBelongToSpecifiedClientException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(PatientDoesNotBelongToSpecifiedClientException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handlePatientDoesNotBelongToSpecifiedClientException(PatientDoesNotBelongToSpecifiedClientException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(InvalidDateFormatException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleInvalidDateFormatException(InvalidDateFormatException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(BedDoesNotExistException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleBedDoesNotExistException(BedDoesNotExistException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(PatientCreatedWithIncorrectStatusWhenAdmittedException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handlePatientCreatedWithIncorrectStatusWhenAdmittedException(PatientCreatedWithIncorrectStatusWhenAdmittedException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(BedHasAlreadyBeenOccupiedException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleBedHasAlreadyBeenOccupiedException(BedHasAlreadyBeenOccupiedException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(PatientHasNotSubscribedException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handlePatientHasNotSubscribedException(PatientHasNotSubscribedException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(DeviceDoesNotExistException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleDeviceDoesNotExistException(DeviceDoesNotExistException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(DeviceNotAssociatedWithBedException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleDeviceNotAssociatedWithBedException(DeviceNotAssociatedWithBedException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(ClientDoesNotExistException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handleClientDoesNotExistException(ClientDoesNotExistException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(PatientDoesNotExistException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handlePatientDoesNotExistException(PatientDoesNotExistException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
-
-    @ExceptionHandler(PatientHasAlreadyBeenDischargedException.class)
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
-    public ErrorMessage handlePatientHasAlreadyBeenDischargedException(PatientHasAlreadyBeenDischargedException ex){
-        ex.printStackTrace();
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), ex.getMessage(), LocalDateTime.now().toString());
-    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     public ErrorMessage handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
-        ex.printStackTrace();
+    	logger.error("",ex);
         return new ErrorMessage(HttpStatus.BAD_REQUEST.toString(), "Validation failed for request body: "+ Utility.getAllErrorMessages(ex), LocalDateTime.now().toString());
     }
 

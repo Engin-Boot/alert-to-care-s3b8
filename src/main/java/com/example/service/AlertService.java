@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import com.example.vitalactions.VitalResolver;
 
 @Service
 public class AlertService {
+	final Logger logger = LogManager.getLogger(AlertService.class);
     AlertRepository alertRepository;
 
     AlertMapper alertMapper;
@@ -30,7 +33,7 @@ public class AlertService {
     public Alert saveAlert(String bed_id, String client_id, String patient_id, String device_id, VitalsDTO vitalsDTO){
 
         String vitalsStatus = checkVitalsAreOk(vitalsDTO.getMeasurements());
-        if(!vitalsStatus.equals("")) {
+        if(!"".equals(vitalsStatus)) {
             AlertDTO alertDTO = new AlertDTO(client_id, bed_id, patient_id, device_id, vitalsStatus);
             Alert alert = alertMapper.mapAlertDTOtoAlertEntity(alertDTO);
             String alert_id = UUID.randomUUID().toString();
@@ -52,8 +55,7 @@ public class AlertService {
         	return "Device is malfunctioning";
         }
         message = VitalResolver.vitalValidatorCaller(measurement);
-        System.out.println(message);
-        //System.out.println("GGGG");
+        logger.info(message);
         return message;
     }
 }

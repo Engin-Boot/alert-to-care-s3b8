@@ -76,7 +76,7 @@ public class MonitoringController {
 
         if(patient.getIsAlarmActive()) {
             List<Alert> alerts = alertService.getAllAlertsByPatientId(patient_id.toString());
-            if(alerts.size() == 0){
+            if(alerts.isEmpty()){
                 return new ResponseEntity<List<Alert>>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<List<Alert>>(alerts, HttpStatus.OK);
