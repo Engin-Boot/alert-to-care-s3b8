@@ -62,11 +62,11 @@
        Http Request Type: POST
        Request body: 
        {
-	"measurement":
-	{
-	  "spo2": 20,
-	  "bpm": 10
-	}
+         "measurement":
+          {
+           "spo2": 20,
+           "bpm": 10
+          }
        }
        
        
@@ -83,7 +83,7 @@
        Http Request Type: PUT
        Request body: 
        {
-	"isAlarmActive": "false"
+        "isAlarmActive": "false"
        }
      
      
