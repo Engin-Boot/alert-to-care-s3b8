@@ -1,6 +1,7 @@
 /bin
 HELP.md
 target/
+jarfiles/
 .mvn/wrapper/
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -24,7 +25,6 @@ target/
 *.iml
 *.ipr
 *.db
-*.jar
 
 ### NetBeans ###
 /nbproject/private/
