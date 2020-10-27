@@ -1,0 +1,43 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Admit Patient</h1>
+      <p>Please fill the details to admit a patient</p>
+      <hr>
+  
+      <label for="client_id"><b>Client Id</b></label>
+      <br>
+      <select [(ngModel)]="client_id" name="client_id" (change)="onClientChange()">
+        <option *ngFor = "let client of client_list" [value]="client.client_id">
+          {{client.client_id}}
+        </option>
+      </select>
+      <!-- <input type="text" placeholder="Enter Client Id" name="client_id" required [(ngModel)]="client_id"> -->
+      <br>
+      <label for="patient_name"><b>Patient Name</b></label>
+      <input type="text" placeholder="Enter Patient Name" name="patient_name" required [(ngModel)]="patient_name">
+
+      <label for="dob"><b>Date of Birth</b></label>
+      <input type="text" placeholder="yyyy-mm-dd" name="dob" required [(ngModel)]="dob">
+    
+      <label for="bed_id"><b>Bed Id</b></label>
+      <br>
+      <select [(ngModel)]="bed_id" name="bed_id">
+        <option *ngFor = "let bed of empty_bed_list" [value]="bed">
+          {{bed}}
+        </option>
+      </select>
+      <br>
+      <!-- <input type="text" placeholder="Enter Bed Id" name="bed_id" required [(ngModel)]="bed_id"> -->
+
+      <label for="alarmstatus"> <b>Would you like to subscribe to receive alerts</b></label><br>
+
+      <input type="checkbox" [checked]="alarmstatus" required (change)="alarmstatus = !alarmstatus"/>
+
+    
+
+      <div class="clearfix">
+        <button type="button" class="cancelbtn" (click)="onReset()">Reset</button>
+        <button type="button" class="setupbtn" (click)="onSetup()">Setup</button>
+      </div>
+    </div>
+  </form>

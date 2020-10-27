@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+select {
+    width: 40%;
+    height: 30px;
+    font-size: 100%;
+    font-weight: bold;
+    cursor: pointer;  
+    margin-top:5px;
+    margin-bottom: 5px;;
+  }

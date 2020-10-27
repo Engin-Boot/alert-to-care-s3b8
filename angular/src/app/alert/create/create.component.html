@@ -1,0 +1,40 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Create Alert</h1>
+      <p>Please fill the details to create alert for device</p>
+    
+      <label for="client_id"><b>Client Id</b></label>
+      <br>
+      <select [(ngModel)]="client_id" name="client_id" (change)="onClientChange()">
+        <option *ngFor = "let client of client_list" [value]="client.client_id">
+          {{client.client_id}}
+        </option>
+      </select>
+      <br>
+      
+      <label for="device_id"><b>Device Id</b></label>
+      <!-- <br>
+      <select [(ngModel)]="device_id" name="device_id" (change)="onClientChange()">
+        <option *ngFor = "let device of free_device_list" [value]="device">
+          {{device}}
+        </option>
+      </select>
+      <br> -->
+      <input type="text" placeholder="Enter Device Id" name="device_id" required [(ngModel)]="device_id">
+      <br>
+
+      <label for="spo2"><b>Enter Spo2 value</b></label>
+      <input type="text" placeholder="Enter spo2 value" name="spo2" required [(ngModel)]="spo2">
+
+      <label for="bpm"><b>Enter bpm value</b></label>
+      <input type="text" placeholder="Enter bpm value" name="bpm" required [(ngModel)]="bpm">
+    
+      <label for="resprate"><b>Enter Resprate value</b></label>
+      <input type="text" placeholder="Enter resprate value" name="resprate" required [(ngModel)]="resprate">
+
+      <div class="clearfix">
+        <button type="button" class="cancelbtn" (click)="onReset()">Reset</button>
+        <button type="button" class="setupbtn" (click)="onSetup()">Create Alert</button>
+      </div>
+    </div>
+  </form>

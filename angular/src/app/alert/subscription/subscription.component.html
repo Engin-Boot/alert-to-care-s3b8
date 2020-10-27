@@ -1,0 +1,40 @@
+<form style="border:1px solid #ccc">
+    <div class="container">
+      <h1>Configure Alert subscription Status</h1>
+      
+      <hr>
+      <label for="client_id"><b>Client Id</b></label>
+      <br>
+      <select [(ngModel)]="client_id" name="client_id" (change)="onClientChange()">
+        <option *ngFor = "let client of client_list" [value]="client.client_id">
+          {{client.client_id}}
+        </option>
+      </select>
+      <br>
+      <!-- <input type="text" placeholder="Enter Client Id" name="client_id" required [(ngModel)]="client_id"> -->
+
+      <label for="patient_id"><b>Patient Id</b></label>
+      <br>
+      <select [(ngModel)]="patient_id" name="patient_id">
+        <option *ngFor = "let patient of admitted_patient_list" [value]="patient.patient_id">
+          {{patient.name}} ---> {{patient.patient_id}}
+        </option>
+      </select>
+      <br>
+  
+      <!-- <input type="text" placeholder="Enter Bed Id" name="bed_id" required [(ngModel)]="bed_id"> -->
+
+      <label for="alarmstatus"> <b>Would you like to keep your Alert subscription Active?</b></label><br>
+
+      <input type="checkbox" [checked]="alarmstatus" required (change)="alarmstatus = !alarmstatus"/>
+
+    
+
+      <div class="clearfix">
+        
+        <button type="button" class="setupbtn" (click)="onSetUp()">Setup</button>
+      </div>
+    </div>
+  </form>
+
+
