@@ -1,14 +1,5 @@
 package com.example.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.dto.BedDTO;
 import com.example.entities.Bed;
 import com.example.entities.BedStatus;
@@ -17,6 +8,10 @@ import com.example.exceptions.BedDoesNotExistException;
 import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
 import com.example.mapper.BedMapper;
 import com.example.repository.BedRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 
 @Service
@@ -102,6 +97,16 @@ public class BedService {
             throw new BedDoesNotExistException("Bed does not exist with id = "+bed_id);
         }
     }
-
+    //method to get list of all the empty bed
+    public List<String> getEmptyBedsByClientId(String clientId){
+        List<Bed> allBedList = bedRepository.findByClientId(clientId);
+        List<String> emptyBedList=new ArrayList<String>();
+        for(Bed bed:allBedList){
+            if(bed.getBedStatus().equalsIgnoreCase("VACANT")){
+                emptyBedList.add(bed.getBed_id());
+            }
+        }
+        return emptyBedList;
+    }
 
 }

@@ -1,28 +1,23 @@
 package com.example.controller;
 
-import java.util.UUID;
-
-import javax.validation.Valid;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.example.dto.ClientDTO;
 import com.example.entities.Client;
 import com.example.exceptions.ClientAlreadyExistsException;
 import com.example.service.BedService;
 import com.example.service.ClientService;
 import com.example.service.DeviceService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.UUID;
+import java.util.List;
+
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/pms")
 public class ConfigurationController {
@@ -37,6 +32,7 @@ public class ConfigurationController {
     @Autowired
     private DeviceService deviceService;
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/client/config")
     public ResponseEntity<Client> createClient(@Valid @RequestBody ClientDTO clientDTO) throws ClientAlreadyExistsException {
         Client savedClient = clientService.saveClient(clientDTO);
@@ -58,5 +54,11 @@ public class ConfigurationController {
         deviceService.createDevices(no_of_beds_to_add);
         logger.info("Saving devices");
         return new ResponseEntity<Client>(savedClient, HttpStatus.OK);
+    }
+
+    //api to get all clients
+    @GetMapping("/client/all")
+    public List<Client> getAllClients(){
+        return clientService.getALlClients();
     }
 }
