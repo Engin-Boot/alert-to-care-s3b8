@@ -1,41 +1,25 @@
 package com.example.controller;
 
-import java.util.Map;
-import java.util.UUID;
-
-import javax.validation.Valid;
-
+import com.example.dto.PatientDTO;
+import com.example.entities.Patient;
+import com.example.exceptions.*;
+import com.example.service.BedService;
+import com.example.service.ClientService;
+import com.example.service.DeviceService;
+import com.example.service.PatientService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.dto.PatientDTO;
-import com.example.entities.Patient;
-import com.example.exceptions.BedDoesNotBelongToSpecifiedClientException;
-import com.example.exceptions.BedDoesNotExistException;
-import com.example.exceptions.BedHasAlreadyBeenOccupiedException;
-import com.example.exceptions.ClientDoesNotExistException;
-import com.example.exceptions.DeviceDoesNotExistException;
-import com.example.exceptions.InvalidDateFormatException;
-import com.example.exceptions.PatientAlreadyExistsException;
-import com.example.exceptions.PatientCreatedWithIncorrectStatusWhenAdmittedException;
-import com.example.exceptions.PatientDoesNotBelongToSpecifiedClientException;
-import com.example.exceptions.PatientDoesNotExistException;
-import com.example.exceptions.PatientHasAlreadyBeenDischargedException;
-import com.example.service.BedService;
-import com.example.service.ClientService;
-import com.example.service.DeviceService;
-import com.example.service.PatientService;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/pms")
 public class OccupancyController {
@@ -87,6 +71,31 @@ public class OccupancyController {
         bedService.updateBedStatusAfterPatientDischarged(dischargedPatient.getBedId());
         deviceService.updateDeviceAfterPatientDischarge(dischargedPatient.getBedId());
         return new ResponseEntity<Patient>(dischargedPatient, HttpStatus.OK);
+    }
+
+    //controller for getting all the empty bed of particular client
+    @GetMapping("/client/{client_id}/emptybeds")
+    public ResponseEntity<List<String>> getEmptyBedsForSpecifiedClient(@PathVariable(value = "client_id") UUID client_id) throws ClientDoesNotExistException, BedDoesNotExistException {
+        //FIRST WE ARE CHECKING IF CLIENT WITH ID=client_id EXISTS.Only then we are getting bed status
+        if(clientService.checkIfClientExists(client_id.toString())) {
+            List<String> emptyBeds = bedService.getEmptyBedsByClientId(client_id.toString());
+            return new ResponseEntity<List<String>>(emptyBeds, HttpStatus.OK);
+        }
+        else{
+            throw new ClientDoesNotExistException("Client with id = "+client_id.toString()+ "does not exist");
+        }
+    }
+    //controller for getting all the patients admitted
+    @GetMapping("/client/{client_id}/admittedpatients")
+    public ResponseEntity<List<Patient>> getPatientsAdmittedToSpecifiedClient(@PathVariable(value = "client_id") UUID client_id) throws ClientDoesNotExistException, BedDoesNotExistException {
+        //FIRST WE ARE CHECKING IF CLIENT WITH ID=client_id EXISTS.Only then we are getting bed status
+        if(clientService.checkIfClientExists(client_id.toString())) {
+            List<Patient> admittedPatients = patientService.getAdmittedPatients(client_id.toString());
+            return new ResponseEntity<List<Patient>>(admittedPatients, HttpStatus.OK);
+        }
+        else{
+            throw new ClientDoesNotExistException("Client with id = "+client_id.toString()+ "does not exist");
+        }
     }
 }
 

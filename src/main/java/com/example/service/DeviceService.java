@@ -1,11 +1,5 @@
 package com.example.service;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.dto.DeviceDTO;
 import com.example.entities.Device;
 import com.example.entities.DeviceStatus;
@@ -13,12 +7,17 @@ import com.example.exceptions.DeviceDoesNotExistException;
 import com.example.exceptions.DeviceNotAssociatedWithBedException;
 import com.example.mapper.DeviceMapper;
 import com.example.repository.DeviceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @Service
 public class DeviceService {
     DeviceRepository deviceRepository;
-
     DeviceMapper deviceMapper;
 
     @Autowired
@@ -80,8 +79,14 @@ public class DeviceService {
         return deviceRepository.save(deviceToUpdate);
     }
 
-
-    
-
-
+    //method for getting all the device
+    public List<Device> getAllDevice(){
+        List<Device> allDevices=deviceRepository.findAll();
+        return allDevices;
+    }
+    //method to get device by bed_id
+    public Device getDeviceForBedId(String bed_id)  {
+        Device device = deviceRepository.findByBedId(bed_id);
+            return device;
+    }
 }

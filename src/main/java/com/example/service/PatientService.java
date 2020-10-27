@@ -1,23 +1,19 @@
 package com.example.service;
 
-import java.util.Optional;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.dto.PatientDTO;
 import com.example.entities.Patient;
 import com.example.entities.PatientStatus;
-import com.example.exceptions.InvalidDateFormatException;
-import com.example.exceptions.PatientAlreadyExistsException;
-import com.example.exceptions.PatientCreatedWithIncorrectStatusWhenAdmittedException;
-import com.example.exceptions.PatientDoesNotBelongToSpecifiedClientException;
-import com.example.exceptions.PatientDoesNotExistException;
-import com.example.exceptions.PatientHasAlreadyBeenDischargedException;
+import com.example.exceptions.*;
 import com.example.mapper.PatientMapper;
 import com.example.repository.PatientRepository;
 import com.example.utility.Utility;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PatientService {
@@ -99,6 +95,17 @@ public class PatientService {
         else{
             throw new PatientDoesNotBelongToSpecifiedClientException("Patient with id = "+patient_id + " is not associated with clientId = "+client_id);
         }
+    }
+    //method for getting all the patients admitted to particular client
+    public List<Patient> getAdmittedPatients(String clientID){
+        List<Patient> allPatients= patientRepository.findByClientId(clientID);
+        List<Patient> admittedPatients=new ArrayList<Patient>();
+        for(Patient patient:allPatients){
+            if(patient.getPatientStatus().equalsIgnoreCase("ADMITTED")){
+                admittedPatients.add(patient);
+            }
+        }
+        return admittedPatients;
     }
 }
 
