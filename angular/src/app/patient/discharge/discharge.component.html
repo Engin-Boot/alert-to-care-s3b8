@@ -18,7 +18,7 @@
       <br>
       <select [(ngModel)]="patient_id" name="patient_id">
         <option *ngFor = "let patient of admitted_patient_list" [value]="patient.patient_id">
-          {{patient.name}}
+          {{patient.name}}----{{patient.patient_id}}
         </option>
       </select>
       <br>
@@ -27,7 +27,7 @@
       
 
       <div>
-        <button type="button" class="btn btn-primary" (click)="DischargePatient()">Discharge</button>
+        <button type="button" class="btn btn-primary" (click)="DischargePatient()" routerLink="/" routerLinkActive="active">Discharge</button>
       </div>
     </div>
   </form>

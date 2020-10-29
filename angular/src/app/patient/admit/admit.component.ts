@@ -39,11 +39,12 @@ export class AdmitComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+        alert("Patient Admission Failed! Please Try again.");
       },
       ()=>{
         console.log("Request Completed");
+        alert("Patient Admitted Successfully!");
       });
-
   }
 
   onReset(){

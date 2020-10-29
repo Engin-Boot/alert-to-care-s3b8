@@ -13,14 +13,14 @@
       <br>
       
       <label for="device_id"><b>Device Id</b></label>
-      <!-- <br>
+      <br>
       <select [(ngModel)]="device_id" name="device_id" (change)="onClientChange()">
         <option *ngFor = "let device of free_device_list" [value]="device">
           {{device}}
         </option>
       </select>
-      <br> -->
-      <input type="text" placeholder="Enter Device Id" name="device_id" required [(ngModel)]="device_id">
+      <br>
+      <!-- <input type="text" placeholder="Enter Device Id" name="device_id" required [(ngModel)]="device_id"> -->
       <br>
 
       <label for="spo2"><b>Enter Spo2 value</b></label>
@@ -33,8 +33,10 @@
       <input type="text" placeholder="Enter resprate value" name="resprate" required [(ngModel)]="resprate">
 
       <div class="clearfix">
-        <button type="button" class="cancelbtn" (click)="onReset()">Reset</button>
-        <button type="button" class="setupbtn" (click)="onSetup()">Create Alert</button>
+        <table>
+          <tr><td><button type="button" class="cancelbtn" (click)="onReset()">Reset</button></td></tr>
+          <tr><td><button type="button" class="setupbtn" (click)="onSetup()" routerLink="/" routerLinkActive="active">Create Alert</button></td></tr>
+        </table>
       </div>
     </div>
   </form>

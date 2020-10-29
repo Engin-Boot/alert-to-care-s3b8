@@ -19,6 +19,7 @@ export class StatusComponent implements OnInit {
   //bed_status_list:Bed_status[];
   bed_status_list:Map<string,string>=new Map<string,string>();
   bed_status:Bed_status[]=[];
+  isShow=true;
 
   client_id:string;
   ngOnInit(): void {
@@ -46,6 +47,7 @@ export class StatusComponent implements OnInit {
         console.log("Request Completed");
       });
 
+      this.displayTableDiv();
   }
 
   getClient(){
@@ -62,5 +64,9 @@ export class StatusComponent implements OnInit {
         console.log("Request Completed");
       }
     );
+  }
+
+  displayTableDiv(){
+    this.isShow=!this.isShow;
   }
 }

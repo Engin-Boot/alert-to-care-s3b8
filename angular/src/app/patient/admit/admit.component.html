@@ -36,8 +36,10 @@
     
 
       <div class="clearfix">
-        <button type="button" class="cancelbtn" (click)="onReset()">Reset</button>
-        <button type="button" class="setupbtn" (click)="onSetup()">Setup</button>
+        <table>
+          <tr><td><button type="button" class="cancelbtn" (click)="onReset()">Reset</button></td></tr>
+          <tr><td><button type="button" class="setupbtn" (click)="onSetup()" routerLink="/" routerLinkActive="active">Setup</button></td></tr>
+        </table>
       </div>
     </div>
   </form>

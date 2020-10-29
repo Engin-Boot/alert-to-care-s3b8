@@ -45,9 +45,11 @@ export class CreateComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+        alert("Alert Creation Failed!");
       },
       ()=>{
         console.log("Request Completed");
+        alert("Alert Created Successfully!");
       });
 
   }
@@ -69,6 +71,7 @@ export class CreateComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+        
       },
       ()=>{
         console.log("Request Completed");

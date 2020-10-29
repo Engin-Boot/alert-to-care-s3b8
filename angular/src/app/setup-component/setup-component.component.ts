@@ -1,5 +1,6 @@
 import { Component, Inject,OnInit } from '@angular/core';
 import {ClientService} from '../service/app.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'setup-comp',
@@ -12,6 +13,7 @@ export class SetupComponent implements OnInit {
   constructor(@Inject("clientService") clientServiceRef:ClientService) {
     this.clientServiceRef=clientServiceRef;
    }
+   router:Router;
   // constructor(){}
   
    client_type:string;
@@ -33,11 +35,13 @@ export class SetupComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+        alert("ICU setup failed! Please try again.");
       },
       ()=>{
         console.log("Request Completed");
+        this.generateAlert();
       });
-
+      
   }
 
   onReset(){
@@ -46,5 +50,8 @@ export class SetupComponent implements OnInit {
     this.client_layout="";
     this.no_of_beds=0;
     this.errorMessage="";
+  }
+  generateAlert(){
+    alert("ICU setup completed");
   }
 }

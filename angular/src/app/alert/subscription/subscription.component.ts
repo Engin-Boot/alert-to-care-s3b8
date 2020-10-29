@@ -41,9 +41,10 @@ export class SubscriptionComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+        alert("Alert subscription change procedure failed");
       },
       ()=>{
-        console.log("Request Completed");
+        console.log("Alert Subscription change successful");
       });
 
   }

@@ -23,12 +23,12 @@
       <br>
 
       <div class="clearfix">
-            <button type="button" class="cancelbtn" (click)="onReset()">Reset</button>
+            <!-- <button type="button" class="cancelbtn" (click)="onReset()">Reset</button> -->
             <button type="button" class="setupbtn" (click)="onSetup()">Get Alert</button>
       </div>
       <div>
         <table id="bed_status">
-          <tr>
+          <tr [hidden]="isShow">
             <th>Bed ID</th>
             <th>Alert Message</th>
           </tr>

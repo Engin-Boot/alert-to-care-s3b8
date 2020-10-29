@@ -23,6 +23,7 @@ export class GetAlertComponent implements OnInit {
    patient_id:string;
    alerts:AlertModel[]=[];
    admitted_patient_list:Patient[];
+   isShow=true;
 
   ngOnInit(): void {
     this.getClient();
@@ -42,7 +43,7 @@ export class GetAlertComponent implements OnInit {
       ()=>{
         console.log("Request Completed");
       });
-
+      this.displayTableDiv();
   }
 
   onReset(){
@@ -86,4 +87,7 @@ export class GetAlertComponent implements OnInit {
     this.getAdmittedPatients();
   }
 
+  displayTableDiv(){
+    this.isShow=!this.isShow;
+  }
 }

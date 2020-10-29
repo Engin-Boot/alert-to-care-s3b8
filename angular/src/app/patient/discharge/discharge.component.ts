@@ -32,9 +32,11 @@ export class DischargeComponent implements OnInit {
       },
       (error)=>{
         console.log(error);
+        alert("Patient is not discharged! Please try again.");
       },
       ()=>{
         console.log("Request Completed");
+        this.generateAlert();
       });
   }
 
@@ -72,5 +74,8 @@ export class DischargeComponent implements OnInit {
 
   onClientChange(){
     this.getAdmittedPatients();
+  }
+  generateAlert(){
+    alert("Patient Discharged");
   }
 }

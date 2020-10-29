@@ -18,9 +18,9 @@
       <div>
         <button type="button" class="btn btn-primary" (click)="BedStatus()">Get BedStatus</button>
       </div>
-      <div>
+      <div >
         <table id= "bed_status">
-          <tr>
+          <tr [hidden]="isShow">
             <th>Bed ID</th>
             <th>Bed Status</th>
           </tr>

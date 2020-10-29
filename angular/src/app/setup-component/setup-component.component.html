@@ -8,14 +8,27 @@
       <input type="text" placeholder="Enter Type" name="client_type" required [(ngModel)]="client_type">
 
       <label for="layout"><b>Layout</b></label>
-      <input type="text" placeholder="Enter Layout" name="client_layout" required [(ngModel)]="client_layout">
+      <br>
+      <select required [(ngModel)]="client_layout" name="client_layout">
+        <option value="DEFAULT">DEFAULT</option>
+        <option value="PARALLEL">PARALLEL</option>
+        <option value="L_LAYOUT">L_LAYOUT</option>
+      </select>
+      <br>
+      <!-- <input type="text" placeholder="Enter Layout" name="client_layout" required [(ngModel)]="client_layout"> -->
 
       <label for="no_of_beds"><b>Number of Beds</b></label>
       <input type="number" placeholder="Number of Beds" name="no_of_beds" required [(ngModel)]="no_of_beds">
   
       <div class="clearfix">
-        <button type="button" class="cancelbtn" (click)="onReset()">Reset</button>
-        <button type="button" class="setupbtn" (click)="onSetup()">Setup</button>
+        <table>
+          <tr><td>
+            <button type="button" class="cancelbtn" (click)="onReset()">Reset</button>
+          </td></tr>
+          <tr><td>
+            <button type="button" class="setupbtn" (click)="onSetup()" routerLink="/" routerLinkActive="active">Setup</button>
+          </td></tr>
+        </table>
       </div>
     </div>
   </form>
