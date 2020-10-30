@@ -1,0 +1,32 @@
+name: Angular Build And Run
+
+on: 
+    push:
+        branches: [main]
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Use Node 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Install dependencies
+        run: |
+            cd angular 
+            npm install
+      - name: Build
+        run: |
+             cd angular
+             npm run-script build
